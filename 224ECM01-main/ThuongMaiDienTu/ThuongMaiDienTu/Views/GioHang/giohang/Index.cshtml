@@ -1,0 +1,273 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.GioHang>
+
+@{
+    ViewBag.Title = "Giỏ hàng";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/css/styles_giohang.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+
+
+<body>
+    <header>
+        <div class="top-bar">
+            <div class="left">
+
+                <span class="hotline">
+                    <i class="fas fa-phone"></i> <strong>hotline:</strong> (+00) 987 877
+                    821
+                </span>
+            </div>
+            <div class="logo">
+                <img src="~/img/logo.jpg" alt="Lustria Logo">
+            </div>
+            <div class="right">
+                <a href="#">Log in / Register</a>
+                <a href="javascript:void(0);" onclick="openCart()">
+                    <i class="fas fa-shopping-cart"></i><span class="cart-count">2</span>
+                </a>
+                <a href="#"><i class="fas fa-search"></i></a>
+            </div>
+        </div>
+        <!-- Overlay nền mờ -->
+        <div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
+
+        <!-- Sidebar giỏ hàng -->
+        <div id="sidebar-cart" class="sidebar-cart">
+            <div class="cart-header">
+                <h2>GIỎ HÀNG</h2>
+                <span class="close-btn" onclick="closeCart()">×</span>
+            </div>
+
+            <div class="cart-free-ship">
+                <div class="free-ship-top-border"></div>
+                <div class="free-ship-content">
+                    🎉 Chúc mừng bạn! Đơn hàng của bạn đã được Freeship
+                    <img src="~/img/giphy_s.gif" alt="Free Shipping" class="free-ship-img">
+                </div>
+            </div>
+
+
+
+            <div class="cart-content">
+                @foreach (var item in Model)
+                {
+                    <div class="cart-item">
+                        <!-- Hiển thị ảnh sản phẩm -->
+                        <img src="@Url.Content("~/img/" + item.SanPham.HinhAnh.Split(',')[0].Trim('[', ']'))" alt="@item.SanPham.TenSanPham" />
+
+                        <div class="item-info">
+                            <!-- Tên sản phẩm -->
+                            <p class="item-name">@item.SanPham.TenSanPham</p>
+
+                            <!-- Mô tả sản phẩm hoặc size -->
+                            <p class="item-type">Size: @item.Size</p>
+
+                            <!-- Giá sản phẩm -->
+                            <p class="item-price">@item.SanPham.GiaBan.ToString("N0") ₫</p>
+
+                            <div class="quantity">
+                                <!-- Các nút tăng giảm số lượng -->
+                                <button class="decrease">-</button>
+                                <input type="text" value="@item.SoLuong" readonly />
+                                <button class="increase">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Nút xóa sản phẩm khỏi giỏ -->
+                        <span class="remove-item">XÓA</span>
+                    </div>
+                }
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-note">
+                    <a href="#">Thêm ghi chú</a>
+                    <a href="#" class="detail">Xem chi tiết giỏ hàng</a>
+                </div>
+                <p class="tax-note">Phí ship & thuế được tính ở Trang Thanh Toán</p>
+                <button class="checkout-btn">THANH TOÁN ・ @Model.Sum(m => m.SanPham.GiaBan * m.SoLuong).ToString("N0") ₫</button>
+            </div>
+        </div>
+
+        <nav class="navbar">
+
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">All Categories</a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Pages</a></li>
+                <li><a href="#">Features</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="cart-container">
+        <div class="cart-title">
+            <span class="breadcrumbs">
+                <span class="home-link">Trang chủ</span> > <span class="current-page">Giỏ hàng</span>
+            </span>
+            <h2>GIỎ HÀNG CỦA BẠN (@Model.Count() SẢN PHẨM)</h2>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            <div class="cart-item" data-product-id="@item.idSanPham">
+                <img src="@Url.Content("~/img/" + item.SanPham.HinhAnh.Split(',')[0].Trim('[').Trim(']'))" alt="@item.SanPham.TenSanPham" />
+                <div class="item-details">
+                    <h3>@item.SanPham.TenSanPham</h3>
+                    <p>Giá: <span class="price">@item.SanPham.GiaBan.ToString("N0")₫</span></p>
+                    <p>Size: @item.Size</p>
+                    <div class="quantity-row">
+                        <label>Số lượng</label>
+                        <div class="quantity-box">
+                            <button>-</button>
+                            <input type="text" value="@item.SoLuong" />
+                            <button>+</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="delete-btn">
+                    <img src="~/img/delete-icon.png" alt="Xóa" />
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="order-container">
+        <div class="note-section">
+            <h3>Ghi chú đơn hàng</h3>
+            <textarea placeholder="Nhập thông tin ghi chú của bạn ..."></textarea>
+        </div>
+
+        <div class="order-info">
+            <div class="order-header">THÔNG TIN ĐƠN HÀNG</div>
+
+            <div class="order-summary">
+                <p class="total">
+                    <strong>Tổng tiền:</strong>
+                    <span>
+                        @Model.Sum(item => item.SanPham.GiaBan * item.SoLuong).ToString("N0")₫
+                    </span>
+                </p>
+                <p class="ship-note">
+                    Phí vận chuyển sẽ được tính ở trang thanh toán.<br>
+                    Bạn cũng có thể nhập mã giảm giá ở trang thanh toán.
+                </p>
+            </div>
+
+            <div class="invoice-option">
+                <input type="checkbox" id="invoice" />
+                <label for="invoice">Xuất hóa đơn</label>
+            </div>
+
+            <div class="action-buttons">
+                <button class="continue">Tiếp tục mua hàng</button>
+                <button class="checkout" onclick="window.location.href='@Url.Action("Index", "ThanhToan")'">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="newsletter">
+        <h2>Nhận ưu đãi và coupon mới nhất!</h2>
+        <p>Chúng tôi cam kết bảo mật không lộ thông tin của bạn.</p>
+        <div class="newsletter-form">
+            <input type="email" placeholder="Nhập địa chỉ email của bạn" />
+            <button>ĐĂNG KÝ</button>
+        </div>
+        <p class="note">Nhận ngay coupon giảm 15% khi đăng ký ngay</p>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo-box">
+                    <img src="~/img/logo.png" alt="GL JEWELRY" />
+                </div>
+            </div>
+
+
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Customer Services</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track your Order</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Frequently Asked Questions</a></li>
+                        <li><a href="#">Schedule an appointment</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#">Origins</a></li>
+                        <li><a href="#">Our Purpose</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Giving Back</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Material Care</h4>
+                    <ul>
+                        <li><a href="#">Jewelry Repair</a></li>
+                        <li><a href="#">Ring Sizing</a></li>
+                        <li><a href="#">Metal Allergy Resources</a></li>
+                        <li><a href="#">Styling Tips</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Group Number</h4>
+                    <ul>
+                        <li>Nguyễn Ngọc Tú Anh</li>
+                        <li>Lê Thị Huyền Trang</li>
+                        <li>Nguyễn Văn Nhân</li>
+                        <li>Nguyễn Văn Viên</li>
+                        <li>Nguyễn Văn Bảo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© APOLLONIAN, LLC</span>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span>•</span>
+                <a href="#">Terms of Use</a>
+                <span>•</span>
+                <a href="#">Sitemap</a>
+                <span>•</span>
+                <a href="#">Do Not Sell My Information</a>
+                <span>•</span>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/js/script_giohang.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/script_giohang.js"></script>
+
+
+</body>
+
+</html>

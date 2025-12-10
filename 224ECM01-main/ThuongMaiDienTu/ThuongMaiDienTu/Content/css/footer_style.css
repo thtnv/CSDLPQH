@@ -1,0 +1,118 @@
+.footer {
+    background-color: #2b4b52;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 40px 20px 20px;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+/* .footer-logo .logo-box {
+    font-family: 'Kingsley', serif;
+    margin: 30px;
+    background-color: #ddd;
+    display: inline-block;
+    padding: 30px 50px;
+    font-size: 30px;
+    font-style: italic;
+    color: #000;
+} */
+.footer-logo {
+    display: flex;
+    justify-content: center; /* hoặc flex-start / flex-end tùy vị trí bạn muốn */
+    align-items: center;
+    padding: 20px 0;
+    margin-left: 20px;
+}
+
+.logo-box img {
+    max-width: 250px; /* điều chỉnh theo kích thước logo mong muốn */
+    height: auto;
+    display: block;
+}
+.logo-box img {
+    transition: transform 0.3s ease;
+}
+
+.logo-box img:hover {
+    transform: scale(1.05); /* phóng to nhẹ khi hover */
+}
+
+
+.footer-columns {
+    display: flex;
+    gap: 70px;
+    flex-wrap: wrap;
+}
+
+.footer-column h4 {
+    color: black;
+    font-family: Cormorant Garamond;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.footer-column ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 30px;
+    padding-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    /* Đặt nội dung ở phía bên phải */
+    flex-wrap: wrap;
+    font-size: 13px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-bottom span {
+    color: #000000;
+    margin-right: 25px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #E9CCCC;
+    text-decoration: none;
+}
+
+
+.footer-bottom div span {
+    color: #E9CCCC;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}

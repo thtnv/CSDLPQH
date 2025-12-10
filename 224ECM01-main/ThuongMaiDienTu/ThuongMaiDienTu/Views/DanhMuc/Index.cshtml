@@ -1,0 +1,298 @@
+﻿@model ThuongMaiDienTu.Models.SanPhamViewModel
+@{
+    ViewBag.Title = "Product Catalog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" href="~/stylesdanhmuc.css">
+    <link rel="stylesheet" href="~/Content/css/styles_dropdown_nav.css">
+    <link rel="stylesheet" href="~/Content/css/styles_avatar_header.css">
+    <link rel="stylesheet" href="~/fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+</head>
+
+
+<body>
+    <header>
+        <div class="top-bar">
+            <div class="left">
+
+                <span class="hotline">
+                    <i class="fas fa-phone"></i> <strong>Hotline:</strong> (+00) 987 877
+                    821
+                </span>
+            </div>
+            <div class="logo">
+                <a href="@Url.Action("Index", "Home")">  <img src="~/img/logo.jpg" alt="Lustria Logo"></a>
+            </div>
+            <div class="right">
+                @{
+                    var is_login = ViewBag.isLogin;
+                    if (is_login)
+                    {
+                        <a href="@Url.Action("Index", "GioHang")">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">@(Session["cartCount"] ?? 0)</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "Account")">Log in / Register</a>
+                    }
+
+
+                }
+                <a href="#"><i class="fas fa-search"></i></a>
+                @if (is_login)
+                {
+                    @Html.Action("DropdownMenu", "Account")
+                }
+            </div>
+        </div>
+        <section id="nav-bar">
+            <nav class="navbar">
+
+                <ul class="nav-links">
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    @Html.Action("MenuDanhMuc", "DanhMuc")
+                    <li><a href="@Url.Action("Blog", "Blog")">Blogs</a></li>
+                    <li><a href="@Url.Action("index", "LichSuDatHang")">Purchase History</a></li>
+                </ul>
+            </nav>
+        </section>
+    </header>
+    <div class="page-header">
+
+        <div class="breadcrumb">
+            <a href="@Url.Action("Index", "Home")" class="home-link">Home</a> >
+            <a href="#" class="category-link">@ViewBag.TenDanhMuc</a>
+        </div>
+    </div>
+    <div class="result-container">
+        <div class="result-header">
+            <span class="result-text">Found @ViewBag.KetQuaTim results</span>
+            <div class="sort-dropdown">
+                <select>
+                    <option>Default order</option>
+                    <option>A → Z</option>
+                    <option>Z → A</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h1 class="shop-title">Shop</h1>
+            <h3 class="category-title">CATEGORIES</h3>
+            <ul class="category-list">
+                @foreach (var dm in Model.DanhMucs)
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "DanhMuc", new { idDanhMuc = dm.idDanhMuc })">
+                            @dm.tenDanhMuc
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <form method="get" action="" id="price-filter-form">
+                <div class="price_slider_wrapper">
+                    <h3>FILTER BY PRICE</h3>
+                    <div class="price_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                        <div class="ui-slider-range ui-widget-header ui-corner-all" id="track-fill"></div>
+                        <span class="ui-slider-handle ui-state-default ui-corner-all" id="min-handle"></span>
+                        <span class="ui-slider-handle ui-state-default ui-corner-all" id="max-handle"></span>
+                    </div>
+                    <div class="price_slider_amount">
+                        <input type="text" id="min_price" name="min_price" value="0" data-min="0" placeholder="Minimum price" style="display: none;">
+                        <input type="text" id="max_price" name="max_price" value="10000000" data-max="10000000" placeholder="Maximum price" style="display: none;">
+                        <button type="submit" class="button">Filter</button>
+                        <div class="price_label">
+                            Price <span class="from">0 ₫</span> — <span class="to">10,000,000 ₫</span>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="interest-sidebar">
+                <h3>YOU MAY ALSO LIKE</h3>
+                <ul>
+                    @foreach (var sanPham in Model.SanPhams.Take(4))
+                    {
+                        var images = !string.IsNullOrEmpty(sanPham.HinhAnh)
+                            ? Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(sanPham.HinhAnh)
+                            : new string[0];
+
+                        var firstImage = images.Length > 0 ? images[0].Trim('"') : "default.jpg";
+                        <li>
+                            <img src="@Url.Content("~/img/" + firstImage)" alt="@sanPham.TenSanPham">
+                            <div class="info">
+                                <a href="@Url.Action("Index", "Details", new { id = sanPham.idSanPham })">@sanPham.TenSanPham</a>
+                                <span class="price">@sanPham.GiaBan.ToString("N0") ₫</span>
+                            </div>
+                        </li>
+
+                    }
+                </ul>
+            </div>
+        </div>
+        <!-- Products -->
+        <div class="products">
+            @if (Model.SanPhams.Any())
+            {
+                foreach (var sp in Model.SanPhams)
+                {
+                    var images = !string.IsNullOrEmpty(sp.HinhAnh)
+                        ? Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(sp.HinhAnh)
+                        : new string[0];
+
+                    var firstImage = images.Length > 0 ? images[0].Trim('"') : "default.jpg";
+                    <div class="product-card">
+                        <a href="@Url.Action("Index", "Details", new { id = sp.idSanPham })">
+                            <div class="product-card-img">
+                                <img src="@Url.Content("~/img/" + firstImage)" alt="@sp.TenSanPham">
+                            </div>
+                        </a>
+                        <input style="display: none" class="quantity-number" id="qty-number" type="number" value="1" />
+                        <h3 class="product-id" style="visibility: hidden;">@sp.idSanPham</h3>
+                        <div class="product-size-section display-flex" style="display: none">
+                            <p>Size: </p>
+                            <ul class="product-size display-flex">
+                                @{
+                                    var sizes = sp.Size?.Split(',') ?? Array.Empty<string>();
+                                    for (int i = 0; i < sizes.Length; i++)
+                                    {
+                                        var size = sizes[i].Trim();
+                                        <li class="@(i == 0 ? "product-size-selected" : "") display-flex"><p>@size</p></li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <div class="product-actions">
+
+                            <button href="#" class="action-btn add-to-cart-btn" data-tooltip="Add to cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                        <p id="tenSanPham">@sp.TenSanPham</p>
+                        <p class="price">@String.Format("{0:0,0} ₫", sp.GiaBan)</p>
+
+                    </div>
+
+                }
+            }
+            else
+            {
+                <div id="no-products-message" style="text-align: center; padding: 20px;">
+                    No products found matching your selection.
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Pagination START -->
+    <div class="pagination-container">
+        <nav class="pagination" aria-label="Product navigation">
+            <ul>
+                <!-- PREVIOUS PAGE LINK -->
+                <li><a href="#" class="page-link prev-page" data-action="prev" aria-label="Previous Page"><</a></li>
+
+                <!-- Page Numbers (Dynamically generated by JS, but initial ones can be here) -->
+                <li><a href="#" class="page-link current-page" data-page="1" aria-current="page">1</a></li>
+                <li><a href="#" class="page-link" data-page="2">2</a></li>
+                <li><a href="#" class="page-link" data-page="3">3</a></li>
+                <!-- More numbers will be added/removed by JS -->
+                <!-- NEXT PAGE LINK -->
+                <li><a href="#" class="page-link next-page" data-action="next" aria-label="Next Page">></a></li>
+            </ul>
+        </nav>
+    </div>
+    <!-- Pagination END -->
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo-box">
+                    <img src="~/img/logo.png" alt="GL JEWELRY" />
+                </div>
+            </div>
+
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Customer Services</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track your Order</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Frequently Asked Questions</a></li>
+                        <li><a href="#">Schedule an appointment</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#">Origins</a></li>
+                        <li><a href="#">Our Purpose</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Giving Back</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Material Care</h4>
+                    <ul>
+                        <li><a href="#">Jewelry Repair</a></li>
+                        <li><a href="#">Ring Sizing</a></li>
+                        <li><a href="#">Metal Allergy Resources</a></li>
+                        <li><a href="#">Styling Tips</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Group Members</h4>
+                    <ul>
+                        <li>Nguyễn Ngọc Tú Anh</li>
+                        <li>Lê Thị Huyền Trang</li>
+                        <li>Nguyễn Văn Nhân</li>
+                        <li>Nguyễn Văn Viên</li>
+                        <li>Nguyễn Văn Bảo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© APOLLONIAN, LLC</span>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span>•</span>
+                <a href="#">Terms of Use</a>
+                <span>•</span>
+                <a href="#">Sitemap</a>
+                <span>•</span>
+                <a href="#">Do Not Sell My Information</a>
+                <span>•</span>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+    <script src="~/scriptdanhmuc.js"></script>
+    <script src="~/Scripts/js/danhmuc_add_to_cart.js"></script>
+</body>
+</html>

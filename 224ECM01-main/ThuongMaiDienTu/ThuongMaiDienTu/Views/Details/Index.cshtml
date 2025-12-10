@@ -1,0 +1,568 @@
+﻿@using System.Linq
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Details";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Jewelry</title>
+    <link rel="stylesheet" href="~/Content/css/footer_style.css">
+    @*css của dropdown*@
+    <link rel="stylesheet" href="~/Content/css/styles_dropdown_nav.css">
+    <link rel="stylesheet" href="~/Content/css/styles_trangchu.css">
+    <link rel="stylesheet" href="~/Content/css/styles_details.css">
+    <link rel="stylesheet" href="~/Content/css/styles_avatar_header.css">
+    <script src="~/Scripts/script.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    @*chỉnh cái link fontawsome lại cho đúng*@
+    <link rel="stylesheet" href="~/fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward_ios" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Karla:ital,wght@0,200..800;1,200..800&family=Kings&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <section>
+            <div class="top-bar">
+                <div class="left">
+
+                    <span class="hotline">
+                        <i class="fas fa-phone"></i> <strong>hotline:</strong> (+00) 987 877
+                        821
+                    </span>
+                </div>
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">  <img src="~/img/logo.jpg" alt="Lustria Logo"></a>
+                </div>
+                <div class="right">
+                    @{
+                        var is_login = ViewBag.isLogin;
+                        if (is_login)
+                        {
+                            <a href="@Url.Action("Index", "GioHang")">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart-count">0</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index", "Account")">Log in / Register</a>
+                        }
+                    }
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    @if (is_login)
+                    {
+                        @Html.Action("DropdownMenu", "Account")
+                    }
+                </div>
+            </div>
+        </section>
+
+        <section id="nav-bar">
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    @Html.Action("MenuDanhMuc", "DanhMuc")
+                    <li><a href="@Url.Action("Blog", "Blog")">Blogs</a></li>
+                    <li><a href="@Url.Action("index", "LichSuDatHang")">Purchase History</a></li>
+                </ul>
+            </nav>
+        </section>
+    </header>
+
+    <main>
+        <div class="page-header display-flex">
+            <h1 class="normal-font align-left flex-1">Shop</h1>
+            <p><span class="color-light-gray">Home</span> <span> > </span>@Model.TenSanPham</p>
+        </div>
+        <div class="page-main-content">
+            <div class="main-left-content">
+                <div class="main-img-wrapper">
+                    @{
+                        var images = ViewBag.Images as string[] ?? new string[0];
+                        if (images.Length > 0)
+                        {
+                            <img class="main-img active" src="@Url.Content("~/img/" + images[0])" />
+                            if (images.Length > 1)
+                            {
+                                <img class="main-img next" style="display: none;" src="@Url.Content("~/img/" + images[1])" />
+                                <img class="zoom-img" src="@Url.Content("~/img/" + images[1])" style="display: none;" />
+                            }
+                        }
+                    }
+                </div>
+
+                <ul class="display-flex justify-space-around">
+                    @foreach (var image in ViewBag.Images as string[] ?? new string[0])
+                    {
+                        <li><img class="sub-img" src="@Url.Content("~/img/" + image)" /></li>
+                    }
+                </ul>
+            </div>
+            <div class="main-right-content">
+                <a class="back-to-selection" href="#">Back</a>
+                <h3 class="product-name">@Model.TenSanPham</h3>
+                <h3 class="product-id" style="visibility: hidden;" class="product-name">@Model.idSanPham</h3>
+                <p class="product-price">@Model.GiaBan.ToString("#,##0").Replace(",", ".")đ</p>
+                <div class="product-size-section display-flex">
+                    <p>Size: </p>
+                    <ul class="product-size display-flex">
+                        @{
+                            var sizes = Model.Size?.Split(',') ?? Array.Empty<string>();
+                            for (int i = 0; i < sizes.Length; i++)
+                            {
+                                var size = sizes[i].Trim();
+                                <li class="@(i == 0 ? "product-size-selected" : "") display-flex"><p>@size</p></li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="product-quantity-add-to-cart-section display-flex">
+                    <div class="product-quantity display-flex">
+                        <span class="cursor-pointer minus-qty-btn" id="minus-qty"><img src="~/img/ico_minus.svg"></span>
+                        <input class="quantity-number" id="qty-number" type="number" value="1" />
+                        <span class="cursor-pointer plus-qty-btn" id="plus-qty"><img src="~/img/ico_plus.svg" /></span>
+                    </div>
+                    <button class="cursor-pointer add-to-cart-btn">
+                        Add to cart
+                    </button>
+                    @*<img class="ico ico-favorite" src="~/img/ico_heart.png" data-base-path="~/img/" />*@
+                </div>
+                <div class="category-section border-bottom width-100 display-flex">
+                    <h3>Categories: </h3>
+                    <ul class="category-list display-flex">
+                        @if (ViewBag.TenDanhMuc != null)
+                        {
+                            <li>@ViewBag.TenDanhMuc</li>
+                        }
+                    </ul>
+                </div>
+                <div class="tag-section border-bottom width-100 display-flex">
+                    <h3>Tags: </h3>
+                    <ul class="tag-list display-flex">
+                        @if (ViewBag.TenDanhMuc != null)
+                        {
+                            <li>@ViewBag.TenDanhMuc</li>
+                        }
+                    </ul>
+                    </ul>
+                </div>
+                <div class="share-section border-bottom width-100 display-flex">
+                    <h3>Share: </h3>
+                    <ul class="share-list display-flex">
+                        <li><i class="fa fa-facebook"></i></li>
+                        <li><i class="fa fa-instagram"></i></li>
+                        <li><i class="fa fa-twitter"></i></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="product-describe-rating">
+            <div class="product-tab" id="product-tab">
+                <ul class="tab-nav">
+                    <li class="active">Description</li>
+                    <div class="moving-border"></div>
+                    <li>Reviews</li>
+                </ul>
+            </div>
+            <div class="product-tab-content-section">
+                <div id="tab-describe" class="product-tab-content">
+                    <p>
+                        @Model.MoTa
+                    </p>
+                </div>
+
+                <div id="tab-rating" class="product-tab-content display-none">
+                    <div class="rating-header">
+                        <div class="rating-header-left">
+                            <h4 class="mean-rating-points">@String.Format("{0:F1}", ViewBag.AverageRating)</h4>
+                            <div class="mean-rating-star">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= ViewBag.AverageRating)
+                                    {
+                                        <span class="fa fa-star"></span>
+                                    }
+                                    else if (i <= Math.Ceiling(ViewBag.AverageRating))
+                                    {
+                                        <span class="fa fa-star-half-o"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="fa fa-star-o"></span>
+                                    }
+                                }
+                            </div>
+                            <h5 class="sum-rating">(@ViewBag.TotalReviews)</h5>
+                        </div>
+                        <ul class="rating-header-right">
+                            @for (int i = 5; i >= 1; i--)
+                            {
+                                var count = ViewBag.RatingStats[i];
+                                var percentage = ViewBag.TotalReviews > 0 ? (count * 100.0 / ViewBag.TotalReviews) : 0;
+                                <li class="number-rating">
+                                    <p>@i</p>
+                                    <div class="progress-bar">
+                                        <div class="percentage-bar" style="width: @percentage%;"></div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="rating-section" id="reviews-container">
+                        @if (!ViewBag.HasReviews)
+                        {
+                            <div id="if_no_rating_exists" class="display-flex">
+                                <p class="align-items-center">There's no review on this product</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <ul id="reviews-list">
+                                @foreach (var review in ViewBag.Reviews)
+                                {
+                                    <li class="display-flex">
+                                        <img class="rating-avatar" src="~/img/avatar_fem_1.png" alt="Avatar">
+                                        <div class="rating-content">
+                                            <p class="rating-username">@review.HoTen</p>
+                                            <div class="rating-star">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= review.SoSao)
+                                                    {
+                                                        <span class="fa fa-star"></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="fa fa-star-o"></span>
+                                                    }
+                                                }
+                                            </div>
+                                            <p class="comment">@review.NoiDung</p>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </div>
+
+                    @if (ViewBag.HasReviews && ViewBag.TotalPages > 1)
+                    {
+                        <div class="pagination" id="pagination-container">
+                            <!-- Previous Button -->
+                            @if (ViewBag.CurrentPage > 1)
+                            {
+                                <a href="#" data-page="@(ViewBag.CurrentPage - 1)">«</a>
+                                <a href="#" data-page="@(ViewBag.CurrentPage - 1)">‹</a>
+                            }
+                            else
+                            {
+                                <a class="disabled">«</a>
+                                <a class="disabled">‹</a>
+                            }
+
+                            <!-- Page Numbers -->
+                            @{
+                                int startPage = Math.Max(1, ViewBag.CurrentPage - 2);
+                                int endPage = Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 2);
+
+                                if (startPage > 1)
+                                {
+                                    <a href="#" data-page="1">1</a>
+                                    if (startPage > 2)
+                                    {
+                                        <span>...</span>
+                                    }
+                                }
+
+                                for (int i = startPage; i <= endPage; i++)
+                                {
+                                    if (i == ViewBag.CurrentPage)
+                                    {
+                                        <a href="#" data-page="@i" class="selected">@i</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" data-page="@i">@i</a>
+                                    }
+                                }
+
+                                if (endPage < ViewBag.TotalPages)
+                                {
+                                    if (endPage < ViewBag.TotalPages - 1)
+                                    {
+                                        <span>...</span>
+                                    }
+                                    <a href="#" data-page="@ViewBag.TotalPages">@ViewBag.TotalPages</a>
+                                }
+                            }
+
+                            <!-- Next Button -->
+                            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                            {
+                                <a href="#" data-page="@(ViewBag.CurrentPage + 1)">›</a>
+                                <a href="#" data-page="@ViewBag.TotalPages">»</a>
+                            }
+                            else
+                            {
+                                <a class="disabled">›</a>
+                                <a class="disabled">»</a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="related-products">
+            <h2>Related products</h2>
+            <div class="container swiper">
+                <div class="card-wrapper">
+                    <ul class="card-list swiper-wrapper">
+                        @{
+                            int idx = 0;
+                            foreach (var item in ViewBag.SanPhamLienQuan)
+                            {
+                                var images_rela = !string.IsNullOrEmpty(item.HinhAnh)
+                                    ? Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(item.HinhAnh)
+                                    : new string[0];
+
+                                var firstImage = images_rela.Length > 0 ? images_rela[0] : "no-image.jpg";
+
+                                <li class="card-item swiper-slide">
+                                    <a href="@Url.Action("Index", "Details", new { id = item.idSanPham })" class="card-link magnetic">
+                                        <div class="card-inner">
+                                            <img src="@Url.Content("~/img/" + firstImage)" alt="@item.TenSanPham" class="card-image">
+                                            <p class="badge @(idx % 2 == 0 ? "dchuyen1" : "vtay2")">@item.TenSanPham</p>
+                                            <h2 class="card-title">@item.TenSanPham</h2>
+                                            <h3 class="card-title">@item.GiaBan.ToString("#,##0").Replace(",", ".")đ</h3>
+                                            <button class="card-button material-symbols-outlined">
+                                                arrow_forward_ios
+                                            </button>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                idx++;
+                            }
+                        }
+
+                        <!-- Thêm sản phẩm hiện tại vào cuối danh sách -->
+                        @{
+                            var mainProductImages = ViewBag.Images as string[] ?? new string[0];
+                            var mainFirstImage = mainProductImages.Length > 0 ? mainProductImages[0] : "no-image.jpg";
+                        }
+                        <li class="card-item swiper-slide">
+                            <a href="@Url.Action("Index", "Details", new { id = Model.idSanPham })" class="card-link magnetic">
+                                <div class="card-inner">
+                                    <img src="@Url.Content("~/img/" + mainFirstImage)" alt="@Model.TenSanPham" class="card-image">
+                                    <p class="badge vtay2">@Model.TenSanPham</p>
+                                    <h2 class="card-title">@Model.TenSanPham</h2>
+                                    <h3 class="card-title">@Model.GiaBan.ToString("#,##0").Replace(",", ".")đ</h3>
+                                    <button class="card-button material-symbols-outlined">
+                                        arrow_forward_ios
+                                    </button>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-slide-button swiper-button-next"></div>
+                    <div class="swiper-slide-button swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo-box">
+                    <img src="~/img/logo.png" alt="GL JEWELRY" />
+                </div>
+            </div>
+
+
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Customer Services</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track your Order</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Frequently Asked Questions</a></li>
+                        <li><a href="#">Schedule an appointment</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#">Origins</a></li>
+                        <li><a href="#">Our Purpose</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Giving Back</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Material Care</h4>
+                    <ul>
+                        <li><a href="#">Jewelry Repair</a></li>
+                        <li><a href="#">Ring Sizing</a></li>
+                        <li><a href="#">Metal Allergy Resources</a></li>
+                        <li><a href="#">Styling Tips</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Group Number</h4>
+                    <ul>
+                        <li>Nguyễn Ngọc Tú Anh</li>
+                        <li>Lê Thị Huyền Trang</li>
+                        <li>Nguyễn Văn Nhân</li>
+                        <li>Nguyễn Văn Viên</li>
+                        <li>Nguyễn Văn Bảo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© APOLLONIAN, LLC</span>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span>•</span>
+                <a href="#">Terms of Use</a>
+                <span>•</span>
+                <a href="#">Sitemap</a>
+                <span>•</span>
+                <a href="#">Do Not Sell My Information</a>
+                <span>•</span>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="~/Scripts/script.js"></script>
+    <script src="~/Scripts/js/add_to_favorite.js"></script>
+    <!-- <script src="js/related_produdct_slider.js"></script> -->
+    <script src="~/Scripts/js/clicking_effects.js"></script>
+    <script src="~/Scripts/js/details_add_to_cart.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        // Handle pagination link clicks
+        $(document).on('click', '#pagination-container a[data-page]', function (e) {
+            e.preventDefault(); // Prevent default link behavior
+            var page = $(this).data('page');
+            var productId = @ViewBag.ProductId;
+
+            console.log('Clicked pagination link: page=' + page + ', productId=' + productId);
+
+            // Make AJAX request to fetch reviews
+            $.ajax({
+                url: '@Url.Action("GetReviews", "Details")',
+                type: 'GET',
+                data: { id: productId, page: page },
+                beforeSend: function () {
+                    console.log('Sending AJAX request...');
+                    $('#reviews-container').html('<p>Loading reviews...</p>');
+                },
+                success: function (data) {
+                    console.log('Received response:', data);
+
+                    // Update reviews list
+                    var reviewsHtml = '';
+                    if (!data.Reviews || data.Reviews.length === 0) {
+                        reviewsHtml = '<div id="if_no_rating_exists" class="display-flex">' +
+                            '<p class="align-items-center">There\'s no review on this product</p>' +
+                            '</div>';
+                    } else {
+                        reviewsHtml = '<ul id="reviews-list">';
+                        $.each(data.Reviews, function (index, review) {
+                            reviewsHtml += '<li class="display-flex">' +
+                                '<img class="rating-avatar" src="/img/avatar_fem_1.png" alt="Avatar">' +
+                                '<div class="rating-content">' +
+                                '<p class="rating-username">' + (review.HoTen || 'Unknown') + '</p>' +
+                                '<div class="rating-star">';
+                            for (var i = 1; i <= 5; i++) {
+                                reviewsHtml += '<span class="fa fa-star' + (i <= review.SoSao ? '' : '-o') + '"></span>';
+                            }
+                            reviewsHtml += '</div>' +
+                                '<p class="comment">' + (review.NoiDung || '') + '</p>' +
+                                '</div></li>';
+                        });
+                        reviewsHtml += '</ul>';
+                    }
+                    $('#reviews-container').html(reviewsHtml);
+
+                    // Update pagination controls
+                    var paginationHtml = '';
+                    if (data.TotalPages > 1) {
+                        // Previous buttons
+                        paginationHtml += (data.CurrentPage > 1)
+                            ? '<a href="#" data-page="' + (data.CurrentPage - 1) + '">«</a>' +
+                              '<a href="#" data-page="' + (data.CurrentPage - 1) + '">‹</a>'
+                            : '<a class="disabled">«</a><a class="disabled">‹</a>';
+
+                        // Page numbers
+                        var startPage = Math.max(1, data.CurrentPage - 2);
+                        var endPage = Math.min(data.TotalPages, data.CurrentPage + 2);
+
+                        if (startPage > 1) {
+                            paginationHtml += '<a href="#" data-page="1">1</a>';
+                            if (startPage > 2) {
+                                paginationHtml += '<span>...</span>';
+                            }
+                        }
+
+                        for (var i = startPage; i <= endPage; i++) {
+                            paginationHtml += '<a href="#" data-page="' + i + '"' +
+                                (i === data.CurrentPage ? ' class="selected"' : '') + '>' + i + '</a>';
+                        }
+
+                        if (endPage < data.TotalPages) {
+                            if (endPage < data.TotalPages - 1) {
+                                paginationHtml += '<span>...</span>';
+                            }
+                            paginationHtml += '<a href="#" data-page="' + data.TotalPages + '">' + data.TotalPages + '</a>';
+                        }
+
+                        // Next buttons
+                        paginationHtml += (data.CurrentPage < data.TotalPages)
+                            ? '<a href="#" data-page="' + (data.CurrentPage + 1) + '">›</a>' +
+                              '<a href="#" data-page="' + data.TotalPages + '">»</a>'
+                            : '<a class="disabled">›</a><a class="disabled">»</a>';
+                    }
+
+                    $('#pagination-container').html(paginationHtml);
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error:', status, error);
+                    $('#reviews-container').html('<p>Error loading reviews. Please try again.</p>');
+                }
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>
+

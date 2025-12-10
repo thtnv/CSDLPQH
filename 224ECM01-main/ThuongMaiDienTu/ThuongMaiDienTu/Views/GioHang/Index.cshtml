@@ -1,0 +1,296 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.GioHang>
+
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/css/styles_dropdown_nav.css">
+    <link rel="stylesheet" href="~/Content/css/styles_giohang.css">
+    <link rel="stylesheet" href="~/Content/css/styles_avatar_header.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+
+
+<body>
+    <header>
+        <div class="top-bar">
+            <div class="left">
+                <span class="hotline">
+                    <i class="fas fa-phone"></i> <strong>Hotline:</strong> (+00) 987 877
+                    821
+                </span>
+            </div>
+            <div class="logo">
+                <a href="@Url.Action("Index", "Home")">  <img src="~/img/logo.jpg" alt="Lustria Logo"></a>
+            </div>
+            <div class="right">
+                @{
+                    var is_login = ViewBag.isLogin;
+                    if (is_login)
+                    {
+                        <a href="@Url.Action("Index", "GioHang")">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">@(Session["cartCount"] ?? 0)</span>
+                        </a>
+
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "Account")">Log in / Register</a>
+                    }
+                }
+                <a href="#"><i class="fas fa-search"></i></a>
+                @if (is_login)
+                {
+                    @Html.Action("DropdownMenu", "Account")
+                }
+            </div>
+        </div>
+        <!-- Overlay background blur -->
+        <div id="cart-overlay" class="cart-overlay" onclick="closeCart()"></div>
+
+        <!-- Shopping cart sidebar -->
+        <div id="sidebar-cart" class="sidebar-cart">
+            <div class="cart-header">
+                <h2>SHOPPING CART</h2>
+                <span class="close-btn" onclick="closeCart()">×</span>
+            </div>
+
+            <div class="cart-free-ship">
+                <div class="free-ship-top-border"></div>
+                <div class="free-ship-content">
+                    🎉 Congratulations! Your order qualifies for Free Shipping
+                    <img src="~/img/giphy_s.gif" alt="Free Shipping" class="free-ship-img">
+                </div>
+            </div>
+
+            <div class="cart-content">
+                @foreach (var item in Model)
+                {
+                    var images = !string.IsNullOrEmpty(item.SanPham.HinhAnh)
+                        ? Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(item.SanPham.HinhAnh)
+                        : new string[0];
+
+                    var firstImage = images.Length > 0 ? images[0].Trim('"') : "default.jpg";
+
+                    <div class="cart-item">
+                        <!-- Display product image -->
+                        <img src="@Url.Content("~/img/" + firstImage)" alt="@item.SanPham.TenSanPham" />
+
+                        <div class="item-info">
+                            <!-- Product name -->
+                            <p class="item-name">@item.SanPham.TenSanPham</p>
+
+                            <!-- Product description or size -->
+                            <p class="item-type">Size: @item.Size</p>
+
+                            <!-- Product price -->
+                            <p class="item-price">@item.SanPham.GiaBan.ToString("N0") ₫</p>
+                        </div>
+
+                        <div class="quantity">
+                            <!-- Quantity adjustment buttons -->
+                            <button class="decrease">-</button>
+                            <input type="text" value="@item.SoLuong" readonly />
+                            <button class="increase">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Remove product button -->
+                    <span class="remove-item">REMOVE</span>
+
+                    @*</div>*@
+                }
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-note">
+                    <a href="#">Add Note</a>
+                    <a href="#" class="detail">View Cart Details</a>
+                </div>
+                <p class="tax-note">Shipping & taxes calculated at Checkout</p>
+                <button class="checkout-btn">CHECKOUT ・ @Model.Sum(m => m.SanPham.GiaBan * m.SoLuong).ToString("N0") ₫</button>
+            </div>
+        </div>
+
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                @Html.Action("MenuDanhMuc", "DanhMuc")
+                <li><a href="@Url.Action("Blog", "Blog")">Blogs</a></li>
+                <li><a href="@Url.Action("index", "LichSuDatHang")">Purchase History</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="cart-container">
+        <div class="cart-title">
+            <span class="breadcrumbs">
+                <span class="home-link">Home</span> > <span class="current-page">Shopping Cart</span>
+            </span>
+            <h2>YOUR CART (@Model.Count() ITEMS)</h2>
+        </div>
+
+        @foreach (var item in Model)
+        {
+            var images = !string.IsNullOrEmpty(item.SanPham.HinhAnh)
+                ? Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(item.SanPham.HinhAnh)
+                : new string[0];
+
+            var firstImage = images.Length > 0 ? images[0].Trim('"') : "default.jpg";
+            <div class="cart-item" data-product-id="@item.idSanPham">
+                <img src="@Url.Content("~/img/" + firstImage)" alt="@item.SanPham.TenSanPham" />
+                <div class="item-details">
+                    <a href="@Url.Action("Index", "Details", new {id = item.SanPham.idSanPham})">
+                        <h3>@item.SanPham.TenSanPham</h3>
+                        <p>Price: <span class="price">@item.SanPham.GiaBan.ToString("N0")₫</span></p>
+                        <p>Size: @item.Size</p>
+                        <div class="quantity-row">
+                            <label>Quantity</label>
+                            <div class="quantity-box">
+                                <button>-</button>
+                                <input type="text" value="@item.SoLuong" />
+                                <button>+</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <button class="delete-btn">
+                    <img src="~/img/delete-icon.png" alt="Delete" />
+                </button>
+            </div>
+        }
+    </div>
+
+    <div class="order-container">
+        <div class="note-section">
+            <h3>Order Note</h3>
+            <textarea placeholder="Enter your note here ..."></textarea>
+        </div>
+
+        <div class="order-info">
+            <div class="order-header">ORDER INFORMATION</div>
+
+            <div class="order-summary">
+                <p class="total">
+                    <strong>Subtotal:</strong>
+                    <span>
+                        @Model.Sum(item => item.SanPham.GiaBan * item.SoLuong).ToString("N0")₫
+                    </span>
+                </p>
+                <p class="ship-note">
+                    Shipping fees will be calculated at checkout.<br>
+                    You can also enter discount codes at checkout.
+                </p>
+            </div>
+
+            <div class="invoice-option">
+                <input type="checkbox" id="invoice" />
+                <label for="invoice">Request Invoice</label>
+            </div>
+
+            <div class="action-buttons">
+                <button class="continue">Continue Shopping</button>
+                <button class="checkout" onclick="window.location.href='@Url.Action("Index", "ThanhToan")'">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="newsletter">
+        <h2 style="color: white;">Get the latest deals and coupons!</h2>
+        <p style="color: white;">We guarantee your information will be kept secure.</p>
+        <div class="newsletter-form">
+            <input type="email" placeholder="Enter your email address" />
+            <button>SUBSCRIBE</button>
+        </div>
+        <p class="note">Get 15% off coupon when you subscribe now</p>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo-box">
+                    <img src="~/img/logo.png" alt="GL JEWELRY" />
+                </div>
+            </div>
+
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Customer Services</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track your Order</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Frequently Asked Questions</a></li>
+                        <li><a href="#">Schedule an appointment</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#">Origins</a></li>
+                        <li><a href="#">Our Purpose</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Giving Back</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Material Care</h4>
+                    <ul>
+                        <li><a href="#">Jewelry Repair</a></li>
+                        <li><a href="#">Ring Sizing</a></li>
+                        <li><a href="#">Metal Allergy Resources</a></li>
+                        <li><a href="#">Styling Tips</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Group Members</h4>
+                    <ul>
+                        <li>Nguyễn Ngọc Tú Anh</li>
+                        <li>Lê Thị Huyền Trang</li>
+                        <li>Nguyễn Văn Nhân</li>
+                        <li>Nguyễn Văn Viên</li>
+                        <li>Nguyễn Văn Bảo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© APOLLONIAN, LLC</span>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span>•</span>
+                <a href="#">Terms of Use</a>
+                <span>•</span>
+                <a href="#">Sitemap</a>
+                <span>•</span>
+                <a href="#">Do Not Sell My Information</a>
+                <span>•</span>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/js/script_giohang.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/script_giohang.js"></script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+﻿@model ThuongMaiDienTu.Models.ThongKeDonHangViewModel
+@{
+    Layout = "~/Views/Admin/Shared/_LayoutAdmin.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+    <title>Thống kê đơn hàng</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.jpg">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/animate.css">
+    <link rel="stylesheet" href="~/Content/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+</head>
+<body>
+    <div class="content">
+        <div class="page-header">
+            <div class="page-title">
+                <h4>Thống kê đơn hàng</h4>
+                <div class="mb-3">
+                    <a href="@Url.Action("ExportExcel", new { tuNgay = Model.TuNgay?.ToString("yyyy-MM-dd"), denNgay = Model.DenNgay?.ToString("yyyy-MM-dd"), loaiThongKe = Model.LoaiThongKe })" class="btn btn-success">Xuất Excel</a>
+                    <a href="@Url.Action("ExportPdf", new { tuNgay = Model.TuNgay?.ToString("yyyy-MM-dd"), denNgay = Model.DenNgay?.ToString("yyyy-MM-dd"), loaiThongKe = Model.LoaiThongKe })" class="btn btn-danger">Xuất PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form method="get">
+                    <label>Từ ngày:</label>
+                    <input type="date" name="tuNgay" value="@Model.TuNgay?.ToString(" yyyy-MM-dd")" />
+
+                    <label>Đến ngày:</label>
+                    <input type="date" name="denNgay" value="@Model.DenNgay?.ToString(" yyyy-MM-dd")" />
+
+                    <label>Loại thống kê:</label>
+                    <select name="loaiThongKe">
+                        <option value="ngay" @(Model.LoaiThongKe == "ngay" ? "selected" : "")>Ngày</option>
+                        <option value="thang" @(Model.LoaiThongKe == "thang" ? "selected" : "")>Tháng</option>
+                        <option value="nam" @(Model.LoaiThongKe == "nam" ? "selected" : "")>Năm</option>
+                    </select>
+
+                    <button type="submit">Thống kê</button>
+                </form>
+
+                <div class="table-responsive mt-3">
+                    <table class="table datanew">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                @if (Model.LoaiThongKe == "ngay")
+                                {
+                                    <th>Ngày</th>
+                                }
+                                else if (Model.LoaiThongKe == "thang")
+                                {
+                                    <th>Tháng</th>
+                                    <th>Năm</th>
+                                }
+                                else
+                                {
+                                    <th>Năm</th>
+                                }
+                                <th>Số đơn hàng</th>
+                                <th>Tổng doanh thu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.DanhSachThongKe != null && Model.DanhSachThongKe.Any())
+                            {
+                                int index = 1;
+                                foreach (var item in Model.DanhSachThongKe)
+                                {
+                                    <tr>
+                                        <td>@index++</td>
+                                        @if (Model.LoaiThongKe == "ngay")
+                                        {
+                                            <td>@($"{item.Ngay}/{item.Thang}/{item.Nam}")</td>
+                                        }
+                                        else if (Model.LoaiThongKe == "thang")
+                                        {
+                                            <td>@item.Thang</td>
+                                            <td>@item.Nam</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.Nam</td>
+                                        }
+                                        <td>@item.SoLuongDonHang</td>
+                                        <td>@item.TongDoanhThu.ToString("N0") VNĐ</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center">Chưa có dữ liệu thống kê.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4">
+                    <h5>Biểu đồ thống kê đơn hàng</h5>
+                    <canvas id="chartDonHang" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+        const labels = [];
+        const data = [];
+
+        @foreach (var item in Model.DanhSachThongKe)
+        {
+            if (Model.LoaiThongKe == "ngay")
+            {
+                <text>labels.push("@($"{item.Ngay}/{item.Thang}/{item.Nam}")");</text>
+            }
+            else if (Model.LoaiThongKe == "thang")
+            {
+                <text>labels.push("Tháng @item.Thang/@item.Nam");</text>
+            }
+            else
+            {
+                <text>labels.push("@item.Nam");</text>
+            }
+            <text>data.push(@item.SoLuongDonHang);</text>
+        }
+
+        const ctx = document.getElementById('chartDonHang').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Số đơn hàng',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Số lượng'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Thời gian'
+                        }
+                    }
+                }
+            }
+        });
+        </script>
+    }
+
+</body>
+</html>

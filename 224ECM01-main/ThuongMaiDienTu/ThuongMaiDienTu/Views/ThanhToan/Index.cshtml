@@ -1,0 +1,376 @@
+﻿@model IEnumerable<ThuongMaiDienTu.Models.GioHang>
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order</title>
+    <link rel="stylesheet" href="~/Content/css/styles.css?v=@DateTime.Now.Ticks">
+    <link rel="stylesheet" href="css/footer_style.css">
+    <link rel="stylesheet" href="~/Content/css/styles_dropdown_nav.css">
+    <link rel="stylesheet" href="~/Content/css/styles_avatar_header.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="top-bar">
+                <div class="left">
+                    <span class="hotline">
+                        <i class="fas fa-phone"></i> <strong>Hotline:</strong> (+00) 987 877
+                        821
+                    </span>
+                </div>
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">  <img src="~/img/logo.jpg" alt="Lustria Logo"></a>
+                </div>
+                <div class="right">
+                    @{
+                        var is_login = ViewBag.isLogin;
+                        if (is_login)
+                        {
+                            <a href="@Url.Action("Index", "GioHang")">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart-count">0</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index", "Account")">Log in / Register</a>
+                        }
+                    }
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    @if (is_login)
+                    {
+                        @Html.Action("DropdownMenu", "Account")
+                    }
+                </div>
+            </div>
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    @Html.Action("MenuDanhMuc", "DanhMuc")
+                    <li><a href="@Url.Action("Blog", "Blog")">Blogs</a></li>
+                    <li><a href="@Url.Action("index", "LichSuDatHang")">Purchase History</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="cart-summary">
+                <h2>Order (@Model.Count() items)</h2>
+                <div class="cart-items">
+                    @foreach (var item in Model)
+                    {
+                        var images = !string.IsNullOrEmpty(item.SanPham.HinhAnh)
+                            ? Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(item.SanPham.HinhAnh)
+                            : new string[0];
+
+                        var firstImage = images.Length > 0 ? images[0].Trim('"') : "default.jpg";
+                        <div class="cart-item">
+                            <img src="@Url.Content("~/img/" + firstImage)" alt="@item.SanPham.TenSanPham">
+                            <div class="product-name">@item.SanPham.TenSanPham</div>
+                            <div class="product-price">@String.Format("{0:N0}₫", item.SanPham.GiaBan)</div>
+                            <div class="product-quantity">Quantity: @item.SoLuong</div>
+                        </div>
+                    }
+                </div>
+
+                <div class="discount-code">
+                    <input type="text" id="discount" name="discount" placeholder="Enter discount code">
+                    <button class="apply-discount">Apply</button>
+                </div>
+
+                <div class="temp-summary">
+                    <div class="temp-line">
+                        <span>Subtotal</span>
+                        <span>@String.Format("{0:N0}₫", ViewBag.TongTien)</span>
+                    </div>
+                    <div class="temp-line">
+                        <span>Shipping fee</span>
+                        <span>0₫</span>
+                    </div>
+                </div>
+
+                <div class="total">
+                    <span>Total</span>
+                    <span>@String.Format("{0:N0}₫", ViewBag.TongTien)</span>
+                </div>
+            </section>
+
+            <section class="order-details">
+                <img src="~/img/id-card-regular 1.png" alt="Delivery information" class="icon">
+                <label for="payment">Delivery Information</label>
+                <form style="margin-top:16px">
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Email" required value="@(Session["Email"])">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Full name" required value="@(Session["HoTen"])">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Phone number" value="@(Session["SoDienThoai"])">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="address" name="address" placeholder="Address (optional)">
+                    </div>
+                    <div class="form-group">
+                        <select id="city" name="city" class="form-control">
+                            <option value="">Select province/city</option>
+                        </select>
+                        <small id="cityNote" style="color: #666; font-size: 12px;margin-left:10px;">Please select province/city first.</small>
+                    </div>
+                    <div class="form-group">
+                        <select id="district" name="district" class="form-control">
+                            <option value="">Select district</option>
+                        </select>
+                        <small id="districtNote" style="color: #666; font-size: 12px; margin-left: 10px;">Select district after choosing province/city.</small>
+                    </div>
+                    <div class="form-group">
+                        <select id="wardSelect" name="ward" class="form-control">
+                            <option value="">Select ward/commune</option>
+                        </select>
+                        <small id="wardNote" style="color: #666; font-size: 12px; margin-left: 10px;">Select ward/commune after choosing district.</small>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="note" name="note" placeholder="Note (optional)"></textarea>
+                    </div>
+                </form>
+            </section>
+
+            <section class="shipping-payment">
+                <div class="payment">
+                    <img src="~/img/payment-icon.png" alt="Payment" class="icon">
+                    <label for="payment">Payment</label>
+                    <div class="payment-method">
+                        <div class="payment-option">
+                            <input type="radio" id="transfer" name="payment" value="transfer" selected>
+                            <label for="transfer">Bank transfer</label>
+                            <img src="~/img/payment-logo1.png" alt="payment logo" class="payment-logo">
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="cod" name="payment" value="cod">
+                            <label for="cod">Cash on delivery (COD)</label>
+                            <img src="~/img/payment-logo1.png" alt="payment logo" class="payment-logo">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="submit-order">Place Order</button>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <div class="logo-box">
+                        <img src="~/img/logo.png" alt="GL JEWELRY" />
+                    </div>
+                </div>
+
+                <div class="footer-columns">
+                    <div class="footer-column">
+                        <h4>Customer Services</h4>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Track your Order</a></li>
+                            <li><a href="#">Shipping & Returns</a></li>
+                            <li><a href="#">Frequently Asked Questions</a></li>
+                            <li><a href="#">Schedule an appointment</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>About Us</h4>
+                        <ul>
+                            <li><a href="#">Origins</a></li>
+                            <li><a href="#">Our Purpose</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Sustainability</a></li>
+                            <li><a href="#">Giving Back</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Material Care</h4>
+                        <ul>
+                            <li><a href="#">Jewelry Repair</a></li>
+                            <li><a href="#">Ring Sizing</a></li>
+                            <li><a href="#">Metal Allergy Resources</a></li>
+                            <li><a href="#">Styling Tips</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Group Members</h4>
+                        <ul>
+                            <li>Nguyễn Ngọc Tú Anh</li>
+                            <li>Lê Thị Huyền Trang</li>
+                            <li>Nguyễn Văn Nhân</li>
+                            <li>Nguyễn Văn Viên</li>
+                            <li>Nguyễn Văn Bảo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© APOLLONIAN, LLC</span>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <span>•</span>
+                    <a href="#">Terms of Use</a>
+                    <span>•</span>
+                    <a href="#">Sitemap</a>
+                    <span>•</span>
+                    <a href="#">Do Not Sell My Information</a>
+                    <span>•</span>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="~/script.js"></script>
+
+    <script type="module">
+        const wards = {
+            'Hà Nội': [
+                'Ba Đình', 'Hoàn Kiếm', 'Tây Hồ', 'Long Biên', 'Cầu Giấy', 'Đống Đa', 'Hai Bà Trưng', 'Hoàng Mai', 'Thanh Xuân',
+                'Sóc Sơn', 'Đông Anh', 'Gia Lâm', 'Nam Từ Liêm', 'Thanh Trì', 'Bắc Từ Liêm'
+            ],
+            'TP. Hồ Chí Minh': [
+                'Quận 1', 'Quận 3', 'Quận 5', 'Quận 10', 'Quận 11', 'Quận Tân Bình', 'Quận Bình Thạnh', 'Quận Phú Nhuận',
+                'Quận Thủ Đức', 'Quận 9', 'Quận 7', 'Quận Gò Vấp', 'Quận Bình Tân', 'Huyện Bình Chánh'
+            ],
+            'Đà Nẵng': [
+                'Hải Châu', 'Thanh Khê', 'Sơn Trà', 'Ngũ Hành Sơn', 'Liên Chiểu', 'Hòa Vang', 'Cẩm Lệ'
+            ],
+            'Hải Phòng': [
+                'Hồng Bàng', 'Lê Chân', 'Ngô Quyền', 'Hải An', 'Kiến An', 'Đồ Sơn', 'Dương Kinh'
+            ],
+            'Cần Thơ': [
+                'Ninh Kiều', 'Bình Thủy', 'Cái Răng', 'Ô Môn', 'Thốt Nốt', 'Phong Điền', 'Cờ Đỏ', 'Vĩnh Thạnh'
+            ]
+        };
+
+        window.onload = () => {
+            const citySelect = document.getElementById('city');
+            const districtSelect = document.getElementById('district');
+            const wardSelect = document.getElementById('wardSelect');
+
+            const cityNote = document.getElementById('cityNote');
+            const districtNote = document.getElementById('districtNote');
+            const wardNote = document.getElementById('wardNote');
+
+            // Add cities to select
+            Object.keys(wards).forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+            });
+
+            citySelect.addEventListener('change', () => {
+                const selectedCity = citySelect.value;
+                districtSelect.innerHTML = '<option value="">Select district</option>';
+                wardSelect.innerHTML = '<option value="">Select ward/commune</option>';
+
+                // Update districts
+                if (wards[selectedCity]) {
+                    wards[selectedCity].forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        option.textContent = district;
+                        districtSelect.appendChild(option);
+                    });
+                }
+
+                // Update notes
+                if (selectedCity) {
+                    cityNote.textContent = '';
+                    districtNote.textContent = 'Select district after choosing province/city.';
+                    wardNote.textContent = 'Select ward/commune after choosing district.';
+                } else {
+                    cityNote.textContent = 'Please select province/city first.';
+                    districtNote.textContent = 'Select district after choosing province/city.';
+                    wardNote.textContent = 'Select ward/commune after choosing district.';
+                }
+            });
+
+            districtSelect.addEventListener('change', () => {
+                wardSelect.innerHTML = '<option value="">Select ward/commune</option>';
+                const selectedCity = citySelect.value;
+                const selectedDistrict = districtSelect.value;
+
+                if (wards[selectedCity] && selectedDistrict) {
+                    wards[selectedCity].forEach(ward => {
+                        const option = document.createElement('option');
+                        option.value = ward;
+                        option.textContent = ward;
+                        wardSelect.appendChild(option);
+                    });
+                    districtNote.textContent = '';
+                    wardNote.textContent = 'Select ward/commune after choosing district.';
+                } else {
+                    districtNote.textContent = 'Please select district first.';
+                    wardNote.textContent = 'Select ward/commune after choosing district.';
+                }
+            });
+
+            wardSelect.addEventListener('change', () => {
+                if (wardSelect.value) {
+                    wardNote.textContent = '';
+                } else {
+                    wardNote.textContent = 'Select ward/commune after choosing district.';
+                }
+            });
+        };
+    </script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.submit-order').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const data = {
+            Email: document.getElementById('email').value,
+            HoTen: document.getElementById('name').value,
+            SoDienThoai: document.getElementById('phone').value,
+            DiaChi: document.getElementById('address').value,
+            GhiChu: document.getElementById('note').value,
+            idNguoiDung: 2 // assuming user ID = 2
+        };
+
+        fetch('@Url.Action("DatHang", "ThanhToan")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                // Remove token if not using @Html.AntiForgeryToken()
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(res => {
+            if (res.success) {
+                alert("✅ " + res.message);
+                window.location.href = '/'; // or redirect to thank you page
+            } else {
+                alert("❌ " + res.message);
+            }
+        })
+        .catch(error => {
+            console.error('Order error:', error);
+            alert('❌ An error occurred while placing your order.');
+        });
+    });
+});
+    </script>
+</body>
+</html>

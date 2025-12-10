@@ -1,0 +1,379 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+
+    <link rel="stylesheet" href="css/footer_style.css">
+    <link rel="stylesheet" href="~/Content/css/styles_dropdown_nav.css">
+    <link rel="stylesheet" href="~/Content/css/styles_trangchu.css">
+    <link rel="stylesheet" href="~/Content/css/styles_details.css">
+    <link rel="stylesheet" href="~/Content/css/styles_avatar_header.css">
+    <script src="~/Scripts/script.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" href="fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward_ios" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward_ios" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Karla:ital,wght@0,200..800;1,200..800&family=Kings&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @*chỉnh cái link fontawsome lại cho đúng*@
+    <link rel="stylesheet" href="~/fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward_ios" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Karla:ital,wght@0,200..800;1,200..800&family=Kings&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <section>
+            <div class="top-bar">
+                <div class="left">
+
+                    <span class="hotline">
+                        <i class="fas fa-phone"></i> <strong>hotline:</strong> (+00) 987 877
+                        821
+                    </span>
+                </div>
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">  <img src="~/img/logo.jpg" alt="Lustria Logo"></a>
+                </div>
+                <div class="right">
+                    @{
+                        var is_login = ViewBag.isLogin;
+                        if (is_login)
+                        {
+                            <a href="@Url.Action("Index", "GioHang")">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart-count">@(Session["cartCount"] ?? 0)</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Index", "Account")">Log in / Register</a>
+                        }
+                    }
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    @if (is_login)
+                    {
+                        @Html.Action("DropdownMenu", "Account")
+                    }
+                </div>
+            </div>
+        </section>
+
+        <section id="nav-bar">
+            <nav class="navbar">
+
+                <ul class="nav-links">
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    @Html.Action("MenuDanhMuc", "DanhMuc")
+                    <li><a href="@Url.Action("Blog", "Blog")">Blogs</a></li>
+                    <li><a href="@Url.Action("index", "LichSuDatHang")">Purchase History</a></li>
+                </ul>
+            </nav>
+        </section>
+    </header>
+
+    <main>
+        <section class="video-intro">
+            <figure id="video-container">
+                <div class="video-play">
+                    <video src="~/video/intro.mp4" controls loop autoplay muted></video>
+
+                </div>
+                <figcaption id="video-caption">
+
+                    <div class="ad-content">
+                        <h2>| WELCOME TO GL JEWELRY</h2>
+                        <p>"Premium Silver – Timeless Beauty That Lasts."</p>
+                        <button class="shop-btn">EXPLORE  -></button>
+                    </div>
+
+                </figcaption>
+            </figure>
+
+        </section>
+
+
+
+
+        <section class="content">
+            <h2>WELCOME TO GL JEWELR</h2>
+            <p>
+                "A world of exquisite silver jewelry, where elegance blends seamlessly with sophistication.
+                As Audrey Hepburn once said, 'Elegance is the only beauty that never fades.'
+                Let GL Jewelry accompany you, shining with unique designs that celebrate your style
+                and distinctive charm in every moment."
+            </p>
+            <p>
+                Embrace your individuality in every moment.
+            </p>
+
+
+            <div class="info-container">
+                <div class="logo1">
+                    <img src="~/img/nhan_1.png" alt="Logo1">
+                </div>
+                <div class="separator"></div>
+                <div class="vertical-separator"></div>
+                <div class="founder">
+                    <span>Developed byc</span>
+                    <p>Nhóm 02</p>
+                </div>
+            </div>
+        </section>
+        <div id="popular-section"
+             data-bg1="@Url.Content("~/img/nen10.jpg")"
+             data-bg2="@Url.Content("~/img/nen8.jpg")">
+        </div>
+        @{
+            var popular = ViewBag.PopularProducts as List<ThuongMaiDienTu.Models.SanPham>;
+        }
+
+        <section class="content-popular">
+            <div class="container">
+                <h2>Popular Jewellery For You</h2>
+                <p>There who like to look good</p>
+                <div class="images">
+                    @for (int i = 0; i < popular.Count; i++)
+                    {
+                        var sp = popular[i];
+                        string firstImage = "default.jpg";
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(sp.HinhAnh))
+                            {
+                                var images = JsonConvert.DeserializeObject<List<string>>(sp.HinhAnh);
+                                if (images != null && images.Any())
+                                {
+                                    firstImage = images[0].Trim();
+                                }
+                            }
+                        }
+                        catch (JsonException)
+                        { }
+
+                        <div class="image-wrapper @(i + 1)">
+                            <img src="@Url.Content("~/img/" + firstImage)" alt="@sp.TenSanPham" class="image@(i + 1)">
+                            <div class="overlay">
+                                <a href="@Url.Action("Index", "Details", new { id = sp.idSanPham })" class="view-button">
+                                    View details
+                                </a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </section>
+
+
+        <section class="content-danhmuc">
+            <div class="danhmuc">
+                <h1>Silver jewelry product catalog</h1>
+                <div class="grid-container">
+                    @for (int i = 0; i < ViewBag.listDanhMuc.Count; i++)
+                    {
+                        // Sau phần tử đầu tiên (i == 1), chèn nội dung đặc biệt
+                        if (i == 1)
+                        {
+                            <a href="#">
+                                <div class="grid-item text item-text">Boost the aesthetics of your interiors</div>
+                            </a>
+                        }
+
+                        var dm = ViewBag.listDanhMuc[i];
+                        <a href="@Url.Action("Index", "DanhMuc", new { id = dm.idDanhMuc })">
+                            <div class="grid-item item-@i">
+                                <img src="@Url.Content("~/img/" + dm.hinhAnh)" alt="@dm.tenDanhMuc" />
+                                <div class="loop"></div>
+                            </div>
+                        </a>
+                    }
+
+                </div>
+            </div>
+        </section>
+
+        <section id="content-bestseller">
+            <h2>BEST SELLER</h2>
+            <div class="container swiper">
+                <div class="card-wrapper">
+                    <ul class="card-list swiper-wrapper">
+                        @using Newtonsoft.Json
+                        @if (ViewBag.SimilarProducts != null)
+                        {
+                            foreach (var product in ViewBag.SimilarProducts as List<ThuongMaiDienTu.Models.SanPham>)
+                            {
+                                // Parse JSON array and get the first image
+                                string firstImage = "default.jpg"; // Fallback image
+                                try
+                                {
+                                    if (!string.IsNullOrEmpty(product.HinhAnh))
+                                    {
+                                        var images = JsonConvert.DeserializeObject<List<string>>(product.HinhAnh);
+                                        if (images != null && images.Any())
+                                        {
+                                            firstImage = images[0].Trim();
+                                        }
+                                    }
+                                }
+                                catch (JsonException)
+                                {
+                                    // Log error if needed; use fallback image
+                                }
+                                <li class="card-item swiper-slide">
+                                    <a href="@Url.Action("Index", "Details", new { id = product.idSanPham })" class="card-link magnetic">
+                                        <div class="card-inner">
+                                            <img src="@Url.Content("~/img/" + firstImage)" alt="@product.TenSanPham" class="card-image">
+                                            <p class="badge">@product.DanhMuc.tenDanhMuc</p>
+                                            <h2 class="card-title">@product.TenSanPham</h2>
+                                            <h3 class="card-title">@product.GiaBan.ToString("#,##0").Replace(",", ".") đ</h3>
+                                            <button class="card-button material-symbols-outlined">
+                                                arrow_forward_ios
+                                            </button>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <p>No products available.</p>
+                        }
+                    </ul>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-slide-button swiper-button-next"></div>
+                    <div class="swiper-slide-button swiper-button-prev"></div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="content-subscribe">
+            <div id="subscribe-form">
+                <h2>Subscribe</h2>
+                <form>
+                    <label for="email"></label>
+                    <input type="email" id="email" placeholder="Type your email....">
+                    <button type="submit" style="display: block;">Submit</button>
+                </form>
+            </div>
+            <figrue id="img-subscribe">
+                <img src="~/img/nen7.jpg" alt="subscribe-img" class="image3">
+            </figrue>
+            <div id="snow-container"></div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo-box">
+                    <img src="~/img/logo.png" alt="GL JEWELRY" />
+                </div>
+            </div>
+
+
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h4>Customer Services</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track your Order</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Frequently Asked Questions</a></li>
+                        <li><a href="#">Schedule an appointment</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#">Origins</a></li>
+                        <li><a href="#">Our Purpose</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Giving Back</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Material Care</h4>
+                    <ul>
+                        <li><a href="#">Jewelry Repair</a></li>
+                        <li><a href="#">Ring Sizing</a></li>
+                        <li><a href="#">Metal Allergy Resources</a></li>
+                        <li><a href="#">Styling Tips</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Group Number</h4>
+                    <ul>
+                        <li>Nguyễn Ngọc Tú Anh</li>
+                        <li>Lê Thị Huyền Trang</li>
+                        <li>Nguyễn Văn Nhân</li>
+                        <li>Nguyễn Văn Viên</li>
+                        <li>Nguyễn Văn Bảo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© APOLLONIAN, LLC</span>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span>•</span>
+                <a href="#">Terms of Use</a>
+                <span>•</span>
+                <a href="#">Sitemap</a>
+                <span>•</span>
+                <a href="#">Do Not Sell My Information</a>
+                <span>•</span>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="~/Scripts/script.js" defer></script>
+
+
+
+</body>
+
+</html>

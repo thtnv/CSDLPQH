@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "Signin - Signup GL Jewelry";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <title>Signin - Signup GL Jewelry</title>
+    <link rel="stylesheet" href="~/Content/css/styles_signUp_signIn.css">
+    @*<link rel="stylesheet" href="~/Content/css/styles_header.css">*@
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="left-block">
+                <div class="left-block-container">
+                    <div class="left-block-upper">
+                        <h1>Add an account, <br />Add your style!</h1>
+                        <p class="gray-text">Elevate your shopping experience, upgrade your style every day!</p>
+                    </div>
+                    <div class="left-block-middle social-btn">
+                        <a href="#" class="btn-primary flex-btn">
+                            <img class="ico" src="~/img/google.png" alt="Google Icon" />
+                            Continue with Google
+                        </a>
+                        <a href="#" class="btn-primary flex-btn">
+                            <img class="ico" src="~/img/facebook.png" alt="Facebook Icon" />
+                            Continue with Facebook
+                        </a>
+                        <a href="#" class="btn-primary flex-btn">
+                            <img class="ico" src="~/img/instagram (1).png" alt="Instagram Icon" />
+                            Continue with Instagram
+                        </a>
+                    </div>
+                    <div class="left-block-bottom">
+                        <div class="middle-line">
+                            <div class="line"></div>
+                            <p>OR</p>
+                            <div class="line"></div>
+                        </div>
+                        <a href="#" class="btn-primary black-bg flex-btn" id="signup-btn">
+                            Sign up using Email
+                        </a>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="checkbox" value="value">
+                            By signing up, you agree to the <a href="#" class="underline">Terms of Service</a> and <a href="#" class="underline">Privacy Policy</a>, including
+                            <a href="#" class="underline">cookie use</a>.
+                        </label>
+                        <div class="sign-in-para" id="signin-btn">
+                            <p>Already have an account?</p><a href="#" class="underline">Sign in now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="signup-form">
+                <h1>Register</h1>
+                <form>
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "signup-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="name">Full name</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tel">Tel</label>
+                            <input type="tel" id="tel" name="tel" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" placeholder="Enter your address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="display-flex input-label">
+                                <p class="align-left">Password</p>
+                                <p id="visible_hide_pass_sign_up_1" class="visible-hide-pass">
+                                    <i class="fas fa-eye-slash"></i>
+                                    <span>Show</span>
+                                </p>
+                            </div>
+                            <input type="password" id="signup-password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="display-flex input-label">
+                                <p class="align-left">Confirm your password</p>
+                                <p id="visible_hide_pass_sign_up_2" class="visible-hide-pass">
+                                    <i class="fas fa-eye-slash"></i>
+                                    <span>Show</span>
+                                </p>
+                            </div>
+                            <input type="password" id="signup-confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                        </div>
+                        <div class="btn-container">
+                            <button type="button" class="back-btn btn btn-primary">Back</button>
+                            <button id="signup-submit-btn" type="submit" class="btn btn-primary black-bg">Register</button>
+                        </div>
+                    }
+                </form>
+            </div>
+
+            <div class="right-block wrapper">
+                <ul class="card-wrapper carousel">
+                    <li class="card">
+                        <div class="image-box">
+                            <img src="~/img/stackable-gold-ring4.jpg" alt="Stackable Gold Ring" />
+                        </div>
+                    </li>
+                    <li class="card">
+                        <div class="image-box">
+                            <img src="~/img/dchuyen1.jpg" alt="Silver Necklace" />
+                        </div>
+                    </li>
+                    <li class="card">
+                        <div class="image-box">
+                            <img src="~/img/moon-necklace3.jpeg" alt="Moon Pendant Necklace" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="overlay"></div>
+        <div class="signin-popup">
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            <h1>Login</h1>
+            <form>
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "sign-form" }))
+                {
+                    @Html.AntiForgeryToken()<div class="form-group">
+                        <label for="signin-email">Email</label>
+                        <input type="email" id="signin-email" name="email" placeholder="Enter your email" required>
+                    </div><div class="form-group">
+                        <div class="display-flex input-label">
+                            <p class="align-left">Password</p>
+                            <p id="visible_hide_pass_sign_in" class="visible-hide-pass">
+                                <i class="fas fa-eye-slash"></i>
+                                <span>Show</span>
+                            </p>
+                        </div>
+                        <input type="password" id="signin-password" name="password" placeholder="Enter your password" required>
+                    </div><button type="submit" class="btn btn-primary black-bg">Login</button>
+                }
+            </form>
+        </div>
+    </section>
+    <script src="~/Scripts/js/signup_signin.js"></script>
+</body>
+</html>

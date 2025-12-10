@@ -1,0 +1,114 @@
+﻿@model List<ThuongMaiDienTu.Models.NguoiDung>
+@{
+    Layout = "~/Views/Admin/Shared/_LayoutAdmin.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.jpg">
+</head>
+<body>
+    <div class="content">
+        <div class="page-header">
+            <div class="page-title">
+                <h4>Quản Lý Users</h4>
+            </div>
+            <div class="page-btn">
+                <a href="@Url.Action("CEUsers", "Admin", new { chucnang = "Create" })" class="btn btn-added">
+                    <img src="~/img/plus.svg" alt="img" class="me-1">Thêm Người Dùng
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-top">
+                    <div class="search-set">
+                        <div class="search-path">
+                            <a class="btn btn-filter" id="filter_search">
+                                <img src="~/img/filter.svg" alt="img">
+                                <span><img src="~/img/closes.svg" alt="img"></span>
+                            </a>
+                        </div>
+                        <div class="search-input">
+                            <a class="btn btn-searchset"><img src="~/img/search-white.svg" alt="img"></a>
+                        </div>
+                    </div>
+                    <div class="wordset">
+                        <ul>
+                            <li><a data-bs-toggle="tooltip" title="pdf"><img src="~/img/pdf.svg" alt="img"></a></li>
+                            <li><a data-bs-toggle="tooltip" title="excel"><img src="~/img/excel.svg" alt="img"></a></li>
+                            <li><a data-bs-toggle="tooltip" title="print"><img src="~/img/printer.svg" alt="img"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table datanew">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="checkboxs">
+                                        <input type="checkbox" id="select-all">
+                                        <span class="checkmarks"></span>
+                                    </label>
+                                </th>
+                                <th>Mã người dùng</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Mật Khẩu</th>
+                                <th>Phân quyền</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <label class="checkboxs">
+                                            <input type="checkbox">
+                                            <span class="checkmarks"></span>
+                                        </label>
+                                    </td>
+                                    <td>@user.idNguoiDung</td>
+                                    <td>@user.HoTen</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.SoDienThoai</td>
+                                    <td>@user.DiaChi</td>
+                                    <td>@user.MatKhau</td>
+                                    <td>@user.PhanQuyen</td>
+                                    <td>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <a class="me-3" href="@Url.Action("CEUsers", "Admin", new { idNguoiDung = user.idNguoiDung, chucnang = "edit" })">
+                                                <img src="~/img/edit.svg" alt="Sửa">
+                                            </a>
+                                            @using (Html.BeginForm("Delete", "Admin", new { id = user.idNguoiDung }, FormMethod.Post, new { onsubmit = "return confirm('Bạn có chắc chắn muốn xoá?');", @class = "m-0" }))
+                                            {
+                                                <button type="submit" class="btn btn-secondary btn-lg">
+                                                    <img src="~/img/delete.svg" alt="Xoá">
+                                                </button>
+                                            }
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+</body>
+</html>

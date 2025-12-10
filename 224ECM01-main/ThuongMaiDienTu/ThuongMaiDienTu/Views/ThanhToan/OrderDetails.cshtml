@@ -1,0 +1,46 @@
+﻿@model ThuongMaiDienTu.Models.HoaDon
+
+
+@{
+    ViewBag.Title = "OrderDetails";
+    Layout = null;
+}
+
+
+
+<div>
+    <h3>Thông Tin Hóa Đơn</h3>
+    <p><strong>Mã Hóa Đơn:</strong> @Model.idHoaDon</p>
+    <p><strong>Ngày Lập:</strong> @Model.ngayLap?.ToString("dd/MM/yyyy")</p>
+    <p><strong>Tổng Tiền:</strong> @string.Format("{0:N0}", Model.tongTien) ₫</p>
+</div>
+
+<div>
+    <h3>Chi Tiết Sản Phẩm</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Tên Sản Phẩm</th>
+                <th>Số Lượng</th>
+                <th>Giá Bán</th>
+                <th>Thành Tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ChiTietHoaDons)
+            {
+                <tr>
+                    <td>@item.SanPham.TenSanPham</td>
+                    <td>@item.soLuong</td>
+                    <td>@string.Format("{0:N0}", item.giaBan) ₫</td>
+                    <td>@string.Format("{0:N0}", item.soLuong * item.giaBan) ₫</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a href="@Url.Action("Confirm", "ThanhToan", new { idHoaDon = Model.idHoaDon })" class="btn btn-primary">Xác Nhận Thanh Toán</a>
+</div>
+

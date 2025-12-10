@@ -1,0 +1,84 @@
+﻿@model List<ThuongMaiDienTu.Models.ThongKeSanPhamViewModel>
+
+@{
+    Layout = "~/Views/Admin/Shared/_LayoutAdmin.cshtml";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Doanh Thu Theo Sản Phẩm</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+        }
+
+        h2, h4 {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="page-header">
+            <div class="page-title">
+                <h4>Thống Kê Doanh Thu Theo Sản Phẩm</h4>
+                <button class="btn btn-primary" onclick="xuatPDF()">Xuất PDF</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body" id="xuatpdf">
+                <h2 class="text-center">HỆ THỐNG MUA BÁN TRANG SỨC</h2>
+                <h4 class="text-center">THỐNG KÊ DOANH THU THEO SẢN PHẨM</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="bang-thongke">
+                        <thead>
+                            <tr>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Danh Mục</th>
+                                <th>Số Lượng Đã Bán</th>
+                                <th>Doanh Thu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.TenSanPham</td>
+                                    <td>@item.TenDanhMuc</td>
+                                    <td>@item.SoLuongBan</td>
+                                    <td>@string.Format("{0:N0} VND", item.DoanhThu)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     Thư viện cần thiết 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function xuatPDF() {
+            const element = document.getElementById("xuatpdf");
+
+            const opt = {
+                margin:       0.5,
+                filename:     'doanhthu_theo_sanpham.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>

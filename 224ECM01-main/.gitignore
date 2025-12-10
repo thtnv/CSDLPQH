@@ -1,0 +1,9 @@
+/vs
+# Binaries and build outputs
+# Build output
+/bin/
+/obj/
+*.dll
+*.pdb
+*.cache
+*.FileListAbsolute.txt

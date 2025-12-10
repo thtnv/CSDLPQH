@@ -1,0 +1,123 @@
+﻿@*@model List<ThuongMaiDienTu.Models.DanhMuc>
+@{
+    Layout = "~/Views/Admin/Shared/_LayoutAdmin.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Dreams Pos admin template</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.jpg">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/animate.css">
+    <link rel="stylesheet" href="~/Content/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/fontawesome/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+</head>
+<body>
+    <div class="content">
+        <div class="page-header">
+            <div class="page-title">
+                <h4>Danh Sách Danh Mục Xe</h4>
+            </div>
+            <div class="page-btn">
+                <a href="CEDanhMucXe?chucnang=Create" class="btn btn-added"><img src="~/assets/img/icons/plus.svg" alt="img" class="me-1">Thêm Danh Mục Xe</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="table-top">
+                    <div class="search-set">
+                        <div class="search-path">
+                            <a class="btn btn-filter" id="filter_search">
+                                <img src="~/assets/img/icons/filter.svg" alt="img">
+                                <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
+                            </a>
+                        </div>
+                        <div class="search-input">
+                            <a class="btn btn-searchset"><img src="~/assets/img/icons/search-white.svg" alt="img"></a>
+                        </div>
+                    </div>
+                    <div class="wordset">
+                        <ul>
+                            <li>
+                                <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="~/assets/img/icons/pdf.svg" alt="img"></a>
+                            </li>
+                            <li>
+                                <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="~/assets/img/icons/excel.svg" alt="img"></a>
+                            </li>
+                            <li>
+                                <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="~/assets/img/icons/printer.svg" alt="img"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table  datanew">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="checkboxs">
+                                        <input type="checkbox" id="select-all">
+                                        <span class="checkmarks"></span>
+                                    </label>
+                                </th>
+                                <th>Mã Danh Mục Xe</th>
+                                <th>Loại Xe</th>
+                                <th>Số Lượng Ghế Tối Đa</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <form method="post">
+                                @foreach (var dmxe in Model.DanhSachDMXe)
+                                {
+                                <tr>
+                                    <td>
+                                        <label class="checkboxs">
+                                            <input type="checkbox">
+                                            <span class="checkmarks"></span>
+                                        </label>
+                                    </td>
+                                    <td>@dmxe.MaDanhMucXe</td>
+                                    <td>@dmxe.LoaiXe</td>
+                                    <td>@dmxe.SoLuongGheToiDa</td>
+                                    <td>
+                                        <a class="me-3" href="CEDanhMucXe?MaDanhMucXe=@dmxe.MaDanhMucXe&chucnang=edit">
+                                            <img src="~/assets/img/icons/edit.svg" alt="img">
+                                        </a>
+                                        <input type="hidden" name="MaDanhMucXe" value="@dmxe.MaDanhMucXe" />
+                                        <button type="submit" class="btn btn-secondary btn-lg btn-block">
+                                            <img src="~/assets/img/icons/delete.svg" alt="img">
+                                        </button>
+                                    </td>
+                                </tr>
+                                }
+                            </form>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var buttons = document.querySelectorAll(".btn-secondary");
+            buttons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var MaDanhMucXe = this.parentElement.querySelector('input[name="MaDanhMucXe"]').value;
+                    // Chuyển hướng đến trang chọn ghế với mã chuyến xe làm tham số trong URL
+                    window.location.href = "QLDanhMucXe?MaDanhMucXe=" + MaDanhMucXe;
+                });
+            });
+        });
+    </script>
+</body>
+</html>*@

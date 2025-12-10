@@ -1,0 +1,18 @@
+input#Submit1 {
+    background-color: #28a745;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 20px;
+}
+
+input#Submit1:hover {
+    background-color: #1ad445;
+}
+
+table tr:not(:last-child,:first-child) td {
+    padding-left: 10px;
+    padding-right: 134px;
+}
+input, textarea {
+    width: 496px;
+}

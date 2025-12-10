@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GL Jewelry</title>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/styles_trangchu.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/footer_style.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/fontawesome/css/all.min.css")" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <script src="@Url.Content("~/Scripts/script.js")" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Dancing+Script&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Karla&family=Kings&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        @*<section>
+                <div class="top-bar">
+                    <div class="left">
+                        <span class="hotline"><i class="fas fa-phone"></i> <strong>Hotline:</strong> (+00) 987 877 821</span>
+                    </div>
+                    <div class="logo">
+                        <img src="@Url.Content("~/Content/img/logo.jpg")" alt="Lustria Logo">
+                    </div>
+                    <div class="right">
+                        <a href="#" class="login-btn">Log in</a>
+                        <a href="">/</a>
+                        <a href="#" class="register-btn">Register</a>
+                        <a href="@Url.Action("GioHang", "Home")"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                        <a href="#"><i class="fas fa-search"></i></a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="nav-bar">
+                <nav class="navbar">
+                    <ul class="nav-links">
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="#">All Categories</a></li>
+                        <li><a href="#">Blogs</a></li>
+                        <li><a href="#">Pages</a></li>
+                        <li><a href="#">Features</a></li>
+                    </ul>
+                </nav>
+            </section>*@
+    </header>
+
+    <main>
+        @RenderBody()  <!-- Đây là nơi load nội dung các View con -->
+    </main>
+
+    <footer>
+        <!-- Footer nếu có -->
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

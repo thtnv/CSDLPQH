@@ -1,0 +1,1133 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--g5-body-font);
+}
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box
+    }
+
+:root {
+    --g5-body-font: 'edmondsans', Arial, sans-serif;
+    /* Định nghĩa biến font */
+}
+
+/* Top Bar */
+.top-bar {
+    background: #ffffff;
+    color: rgb(58, 14, 14);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 50px;
+    align-items: center;
+}
+
+    .top-bar .left,
+    .top-bar .right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .top-bar .logo img {
+        width: 200px;
+        /* Điều chỉnh kích thước logo */
+        height: 100px;
+        /* Giữ tỷ lệ khung hình */
+    }
+
+    .top-bar .right a {
+        color: rgb(58, 14, 14);
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .top-bar .right i {
+        font-size: 18px;
+    }
+
+/* Cart Icon */
+.cart-count {
+    background: green;
+    color: rgb(58, 14, 14);
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    position: relative;
+    top: -15px;
+    left: -5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Style for the arrow */
+
+
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+    background-attachment: fixed;
+    overflow-x: hidden
+}
+
+body {
+    color: #777;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0
+}
+
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+section,
+summary {
+    display: block
+}
+
+audio,
+canvas,
+progress,
+video {
+    display: inline-block
+}
+
+    audio:not([controls]) {
+        display: none;
+        height: 0
+    }
+
+progress {
+    vertical-align: baseline
+}
+
+template,
+[hidden] {
+    display: none
+}
+
+a {
+    background-color: transparent
+}
+
+    a:active,
+    a:hover {
+        outline-width: 0
+    }
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: none
+}
+
+b,
+strong {
+    font-weight: inherit
+}
+
+b,
+strong {
+    font-weight: bolder
+}
+
+dfn {
+    font-style: italic
+}
+
+mark {
+    background-color: #ff0;
+    color: #000
+}
+
+small {
+    font-size: 80%;
+    display: inline-block
+}
+
+img {
+    border-style: none
+}
+
+svg:not(:root) {
+    overflow: hidden
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit
+}
+
+optgroup {
+    font-weight: bold
+}
+
+button,
+input,
+select {
+    overflow: visible
+}
+
+button,
+select {
+    text-transform: none
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    cursor: pointer
+}
+
+[disabled] {
+    cursor: default
+}
+
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button
+}
+
+    button::-moz-focus-inner,
+    input::-moz-focus-inner {
+        border: 0;
+        padding: 0
+    }
+
+    button:-moz-focusring,
+    input:-moz-focusring {
+        outline: 1px dotted ButtonText
+    }
+
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em
+}
+
+legend {
+    box-sizing: border-box;
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    padding: 0;
+    white-space: normal
+}
+
+textarea {
+    overflow: auto
+}
+
+[type="checkbox"],
+[type="radio"] {
+    box-sizing: border-box;
+    padding: 0
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+    height: auto
+}
+
+[type="search"] {
+    -webkit-appearance: textfield
+}
+
+    [type="search"]::-webkit-search-cancel-button,
+    [type="search"]::-webkit-search-decoration {
+        -webkit-appearance: none
+    }
+
+
+
+.container {
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung */
+    align-items: flex-start; /* <--- Changed to flex-start */
+    gap: 20px;
+    max-width: 1400px; /* Giới hạn chiều rộng tối đa */
+    margin: 0 auto; /* Căn giữa */
+}
+
+.sidebar {
+    width: 200px;
+    margin: 0 100px 0 50px;
+    flex-shrink: 0;
+}
+
+    .sidebar h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        color: #333;
+    }
+
+
+.category-list {
+    background: white;
+    list-style: none;
+    padding: 10px 0;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding-left: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    width: 270px;
+}
+
+    .category-list li {
+        border-bottom: 1px solid #eee;
+    }
+
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+
+    .category-list a {
+        display: block;
+        padding: 10px 16px;
+        text-decoration: none;
+        color: #000000;
+        font-size: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .category-list a.active {
+            font-weight: bold;
+        }
+
+        .category-list a.disabled {
+            color: #7b7b7b;
+            pointer-events: none;
+        }
+
+        .category-list a:hover:not(.disabled) {
+            /*    background-color: #f7f7f7;*/
+            background-color: white;
+        }
+
+    .category-list .arrow {
+        margin-left: 10px;
+        color: #7b7b7b;
+    }
+
+
+
+.price_slider_wrapper {
+    width: 300px;
+    font-family: Arial, sans-serif;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.price_slider {
+    position: relative;
+    height: 40px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+    .price_slider::before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 0;
+        height: 4px;
+        background: #ddd;
+        width: 100%;
+        z-index: 1;
+        border-radius: 2px;
+    }
+
+.ui-slider-range {
+    position: absolute;
+    top: 15px;
+    height: 4px;
+    background: #888;
+    z-index: 2;
+    border-radius: 2px;
+}
+
+.ui-slider-handle {
+    position: absolute;
+    top: 11px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #666;
+    cursor: pointer;
+    z-index: 3;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    border: none;
+    outline: none;
+}
+
+.price_slider_amount {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+    .price_slider_amount .button {
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 15px;
+        text-align: center;
+        background-color: #444;
+        color: white;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+.price_label {
+    color: #666;
+    font-size: 14px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+    .price_label .from,
+    .price_label .to {
+        font-weight: bold;
+    }
+
+.clear {
+    clear: both;
+}
+
+
+
+
+
+.products {
+    max-width: 1200px;
+    margin: 0 0 50px 0;
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(3, 1fr); /* Defines 3 columns */
+    gap: 20px;
+    /* Add this line - Adjust the value as needed */
+    min-width: 850px; /* Example: Approx 3 cards wide + gaps */
+}
+
+.product-card {
+    background-color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+    .product-card img {
+        /* Keep existing styles */
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        transition: transform 0.3s ease-in-out;
+        border-radius: 20px;
+    }
+
+    .product-card:hover img {
+        transform: scale(1.08); /* Zoom in slightly (e.g., 1.05 = 5%, 1.1 = 10%) - Adjust as needed */
+    }
+
+
+    .product-card p {
+        margin: 15px 0 5px 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .product-card .price {
+        color: #333;
+        font-weight: bold;
+    }
+
+
+
+/* --- Product Action Icons Container --- */
+.product-actions {
+    position: absolute;
+    /* Position near bottom */
+    bottom: 60px; /* Adjust this value (pixels from the bottom edge of the card) */
+    left: 50%;
+    /* Only translate horizontally to center */
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column; /* Stack icons vertically */
+    gap: 8px; /* Space between icons */
+    z-index: 10; /* Ensure icons are above the image and text */
+    /* Hide initially */
+    opacity: 0;
+    visibility: hidden;
+    /* Smooth transition for appearance */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, bottom 0.3s ease-in-out; /* Transition bottom property */
+    /* Optional: Start slightly lower */
+    /* bottom: 40px; */
+}
+
+/* Show icons on product card hover */
+.product-card:hover .product-actions {
+    opacity: 1;
+    visibility: visible;
+    /* Animate to final position */
+    bottom: 60px; /* Ensure it animates to the final position */
+}
+/* General styling for each icon button */
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px; /* Slightly larger like example */
+    height: 45px; /* Slightly larger like example */
+    border-radius: 8px; /* More rounded corners like example */
+    font-size: 18px; /* Adjust icon size */
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    position: relative; /* Needed for tooltip positioning */
+    /* Initial state: White background, dark icon for BOTH */
+    background-color: #ffffff;
+    color: #333;
+}
+
+    /* Specific Hover States for each button */
+    .action-btn.add-to-cart-btn:hover {
+        background-color: #000000; /* Orange background on hover */
+        color: #ffffff; /* White icon color on hover */
+        transform: scale(1.05); /* Optional: slight scale effect */
+    }
+
+    .action-btn.quick-view-btn:hover {
+        background-color: #e9e9e9; /* Slightly darker white/grey on hover */
+        color: #333; /* Keep icon color dark */
+        transform: scale(1.05); /* Optional: slight scale effect */
+    }
+
+    /* --- CSS Tooltip (Keep the existing tooltip styles) --- */
+    /* Ensure the data-tooltip attributes in your HTML are correct:
+   <a ... data-tooltip="Thêm vào giỏ hàng">...</a>
+   <a ... data-tooltip="Xem nhanh">...</a>
+*/
+    .action-btn[data-tooltip]::before,
+    .action-btn[data-tooltip]::after {
+        position: absolute;
+        left: 50%;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+        z-index: 11;
+    }
+
+    /* Tooltip Text Box */
+    .action-btn[data-tooltip]::before {
+        content: attr(data-tooltip);
+        background-color: #333;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        white-space: nowrap;
+        bottom: 100%;
+        transform: translateX(-50%);
+        margin-bottom: 10px;
+    }
+
+    /* Tooltip Arrow */
+    .action-btn[data-tooltip]::after {
+        content: '';
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #333;
+        bottom: 100%;
+        transform: translateX(-50%);
+        margin-bottom: 4px;
+    }
+
+    /* Show Tooltip on Icon Hover */
+    .action-btn[data-tooltip]:hover::before,
+    .action-btn[data-tooltip]:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+/* --- Ensure Image styles are simple --- */
+.product-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    /* Remove transition if zoom is gone */
+    /* transition: transform 0.3s ease-in-out; */
+}
+
+/* --- Ensure Product Title/Price styles are still present --- */
+.product-card p {
+    margin: 10px 0 5px; /* Adjust spacing if needed */
+    font-size: 14px;
+    color: #333;
+}
+
+.product-card .price {
+    color: #000000; /* Example: Make price red like image? */
+    font-weight: bold;
+    margin-bottom: 5px; /* Add some space at the bottom */
+}
+
+.footer {
+    background-color: #2b4b52;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 40px 20px 20px;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+/* .footer-logo .logo-box {
+    font-family: 'Kingsley', serif;
+    margin: 30px;
+    background-color: #ddd;
+    display: inline-block;
+    padding: 30px 50px;
+    font-size: 30px;
+    font-style: italic;
+    color: #000;
+} */
+.footer-logo {
+    display: flex;
+    justify-content: center;
+    /* hoặc flex-start / flex-end tùy vị trí bạn muốn */
+    align-items: center;
+    padding: 20px 0;
+    margin-left: 20px;
+}
+
+.logo-box img {
+    max-width: 250px;
+    /* điều chỉnh theo kích thước logo mong muốn */
+    height: auto;
+    display: block;
+}
+
+.logo-box img {
+    transition: transform 0.3s ease;
+}
+
+    .logo-box img:hover {
+        transform: scale(1.05);
+        /* phóng to nhẹ khi hover */
+    }
+
+
+.footer-columns {
+    display: flex;
+    gap: 70px;
+    flex-wrap: wrap;
+}
+
+.footer-column h4 {
+    color: black;
+    font-family: Cormorant Garamond;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+    .footer-column ul li {
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+        .footer-column ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+            .footer-column ul li a:hover {
+                text-decoration: underline;
+            }
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 30px;
+    padding-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    /* Đặt nội dung ở phía bên phải */
+    flex-wrap: wrap;
+    font-size: 13px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .footer-bottom span {
+        color: #000000;
+        margin-right: 25px;
+    }
+
+.footer-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+    .footer-links a {
+        color: #E9CCCC;
+        text-decoration: none;
+    }
+
+
+.footer-bottom div span {
+    color: #E9CCCC;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.page-header {
+    display: flex;
+    justify-content: flex-end; /* Căn đều hai bên */
+    align-items: center; /* Canh giữa theo chiều dọc */
+    padding: 20px 50px;
+    max-width: 1200px;
+    margin: 0 10px 0 10px; /* Căn giữa trang */
+}
+
+.shop-title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 200px;
+    margin-left: 30px;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #666;
+}
+
+.home-link {
+    color: #454545;
+    text-decoration: none;
+}
+
+.category-link {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.interest-sidebar {
+    font-family: Arial, sans-serif;
+    width: 300px;
+}
+
+    .interest-sidebar h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        margin-top: 30px;
+    }
+
+    .interest-sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 40px 0 0 0;
+    }
+
+    .interest-sidebar li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+
+    .interest-sidebar img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .interest-sidebar .info {
+        flex-grow: 1;
+    }
+
+        .interest-sidebar .info a {
+            display: block;
+            color: #575757;
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .interest-sidebar .info .price {
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+
+.result-container {
+    display: flex;
+    justify-content: flex-end; /* Căn toàn bộ sang phải */
+    padding: 10px 20px;
+    margin-right: 20px;
+}
+
+.result-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.result-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+}
+
+.sort-dropdown select {
+    font-size: 16px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px;
+}
+
+#no-products-message {
+    display: none; /* Keep this */
+    text-align: center;
+    padding: 40px 20px; /* Increased padding for better visibility */
+    width: 100%; /* Takes full width of its column span */
+    color: #555;
+    font-size: 1.1em;
+    /* Add this line to make it span all grid columns */
+    grid-column: 1 / -1;
+}
+
+
+
+
+
+
+
+
+/* --- Navbar Base --- */
+.navbar {
+    /* Example: Dark background for the main navbar itself */
+    background: #e9e6e6; /* Adjust dark color as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px; /* Remove vertical padding if height comes from links */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 5px; /* Reduce gap slightly? Adjust as needed */
+    justify-content: center;
+    flex: 1;
+    margin: 0; /* Ensure no default margin */
+    padding: 0; /* Ensure no default padding */
+}
+
+    .nav-links li {
+        position: relative; /* Needed for absolute positioning of dropdown */
+    }
+
+        .nav-links li a {
+            /* Example: Light text for main nav links */
+            color: #000000; /* Light gray/white text */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px 20px; /* Control navbar height with link padding */
+            display: block; /* Make the whole area clickable */
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+            /* Optional: Main nav link hover */
+            .nav-links li a:hover {
+                background-color: #000000; /* Slightly different dark shade on hover */
+                color: #ffffff;
+            }
+
+
+/* --- Dropdown Menu (Level 1 & Nested) --- */
+.dropdown-menu {
+    display: none; /* Hide by default */
+    position: absolute;
+    background: #ffffff; /* Dark background for dropdown */
+    min-width: 220px; /* Adjust width as needed */
+    z-index: 1000;
+    list-style: none;
+    padding: 5px 0; /* Small vertical padding for the container */
+    margin: 0; /* Reset margin */
+    border-radius: 0 0 4px 4px; /* Optional: Slightly rounded bottom corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    top: 100%; /* Position directly below the parent li */
+    left: 0; /* Align with the left edge of the parent li */
+    border-top: none; /* Ensure no top border from previous attempts */
+}
+
+    /* Style for list items within ANY dropdown */
+    .dropdown-menu li {
+        position: relative; /* Needed for submenu positioning */
+        border-bottom: 1px solid #4a627a; /* Subtle separator line */
+    }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none; /* No line on the last item */
+        }
+
+        /* Style for links within ANY dropdown */
+        .dropdown-menu li a {
+            color: #000000; /* Light text */
+            padding: 10px 20px; /* Padding for dropdown links */
+            display: flex; /* Use flex to align text and arrow */
+            justify-content: space-between; /* Push arrow to the right */
+            align-items: center;
+            font-weight: normal; /* Normal weight for dropdown items */
+            font-size: 15px;
+            text-decoration: none;
+            white-space: nowrap; /* Prevent text wrapping */
+            transition: background-color 0.3s, color 0.3s;
+            background-color: transparent; /* Ensure default background is transparent */
+            border-radius: 0; /* Reset border-radius from nav links */
+        }
+
+            /* Hover effect for links within ANY dropdown */
+            .dropdown-menu li a:hover,
+            .dropdown-menu li:hover > a { /* Target link directly on li hover too */
+                background: #000000; /* Slightly lighter dark shade on hover */
+                color: #ffffff; /* Brighter white text on hover */
+            }
+
+                .dropdown-menu li a:hover .arrow { /* Ensure arrow color changes on hover */
+                    color: #ffffff;
+                }
+
+
+    /* --- Submenu Specific Styling (.sm-nowrap or nested .dropdown-menu) --- */
+    /* Assuming you use the same .dropdown-menu class for nested menus */
+    .dropdown-menu .dropdown-menu { /* Selects a dropdown *inside* another dropdown */
+        top: 0; /* Align top of submenu with top of parent LI */
+        left: 100%; /* Position to the right */
+        margin-left: 1px; /* Tiny gap to avoid overlap if needed */
+        border-radius: 4px; /* Give it normal border-radius */
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Adjust shadow if needed */
+        padding: 5px 0; /* Reset padding */
+    }
+
+
+/* --- Arrow Styling --- */
+.arrow {
+    /* Use Font Awesome or a simple character */
+    /* If using text character: */
+    font-size: 12px;
+    margin-left: 10px;
+    color: #ecf0f1; /* Match default link color */
+    font-family: sans-serif; /* Use a standard font for the arrow */
+    display: inline-block; /* Needed for potential transforms */
+}
+/* Example: Highlighting the arrow on the active parent item */
+.dropdown-menu li:hover > a > .arrow {
+    color: #ffffff; /* Match link hover color */
+}
+
+
+/* --- Show menus on hover (Pure CSS) --- */
+.nav-links li:hover > .dropdown-menu {
+    display: block;
+}
+/* No extra rule needed for submenus if they also use .dropdown-menu */
+/* If you MUST use .sm-nowrap for the sub-submenu:
+.dropdown-menu li:hover > .sm-nowrap {
+    display: block;
+}
+*/
+
+/* --- Specific Highlight (like "Dây chuyền" in the image) --- */
+/* Add a specific class in your HTML to the link you want to highlight */
+/* Example HTML: <a href="" class="highlight-link">Dây chuyền <span class="arrow">></span></a> */
+.dropdown-menu li a.highlight-link {
+    color: #000000; /* Orange/Red highlight color */
+}
+
+    .dropdown-menu li a.highlight-link .arrow {
+        color: #000000; /* Match arrow color */
+    }
+    /* Hover state for the highlighted link */
+    .dropdown-menu li a.highlight-link:hover {
+        background: #000000; /* Keep hover background consistent */
+        color: #000000; /* Slightly brighter orange/red on hover */
+    }
+
+        .dropdown-menu li a.highlight-link:hover .arrow {
+            color: #000000; /* Match arrow hover color */
+        }
+
+
+
+
+/* --- Pagination Container (Keep basic layout) --- */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px 0;
+    margin-top: 20px;
+}
+
+/* --- Pagination Navigation (ul) --- */
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust gap as needed */
+}
+
+.pagination li {
+    position: relative; /* Needed for z-index on scaled items */
+}
+
+/* --- Define Colors (Using CSS Variables) --- */
+:root {
+    --pagination-dark-blue: #000000; /* Darker blue for default */
+    --pagination-light-blue: #000000b5; /* Lighter blue for hover/active */
+    --pagination-text: #ffffff;
+}
+
+/* --- General Page Links (a) --- */
+.pagination .page-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background-color: var(--pagination-dark-blue); /* Default Dark Blue */
+    color: var(--pagination-text);
+    border-radius: 50%;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15); /* Base shadow */
+    /* Define fixed size for the default state */
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    /* Smooth transitions */
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    transform: scale(1); /* Default scale */
+    position: relative; /* Needed for z-index */
+    z-index: 1; /* Base stacking context */
+}
+
+    /* --- HOVER and ACTIVE Page Styling (Identical Visuals) --- */
+    /* Style for the CURRENT page link */
+    /* Style for hovered links where the parent LI is NOT disabled */
+    .pagination .page-link.current-page,
+    .pagination li:not([style*="pointer-events: none"]) .page-link:hover {
+        background-color: var(--pagination-light-blue); /* Light Blue background */
+        transform: scale(1.2); /* Make it LARGER */
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+        z-index: 2; /* Ensure it's above others */
+    }
+
+    /* --- Specific styles ONLY for the CURRENT page link --- */
+    .pagination .page-link.current-page {
+        font-weight: bold; /* Make current page bold */
+        cursor: default; /* Non-clickable cursor */
+    }
+
+
+/* --- Styling for Next/Prev Buttons --- */
+.pagination .prev-page,
+.pagination .next-page {
+    font-weight: bold;
+    font-size: 16px;
+    /* They inherit default dark blue background and other base styles */
+    /* They will also get the hover/active scale/shadow effect via the combined selector above */
+}
+
+/* --- Disabled State (Handled by JS setting inline style on LI) --- */
+/* Optional: Explicitly style the link inside a disabled LI if you want */
+.pagination li[style*="pointer-events: none"] .page-link {
+    opacity: 0.6; /* Make the link itself visually faded when disabled */
+    box-shadow: none; /* Remove shadow when disabled */
+    /* Override hover effects just in case */
+    transform: scale(1);
+    background-color: var(--pagination-dark-blue);
+}

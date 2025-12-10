@@ -1,0 +1,159 @@
+/* button css */
+.ui.button.round {
+    border-radius: var(--space-xs);
+}
+
+.ui.button.square {
+    border-radius: 0px
+}
+
+.ui.button.size-sm {
+    height: 40px;
+    padding-left: 330px;
+    padding-right: 30px;
+    font-size: 18px;
+}
+
+.ui.button.size-xs {
+    height: 28px;
+}
+
+.ui.button.fill.gray_600_01 {
+    background-color: var(gray_600_01);
+    color: var(--white_a700);
+}
+
+.ui.button {
+    text-align: center;
+    display: flex;
+    cursor: pointer;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+/* text css */
+.ui.text.size-textxs {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.ui.text.size-texts {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.ui.text.size-textmd {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.ui.text.size-textlg {
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.ui.text.size-textxl {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.ui.text.size-text2xl {
+    font-size: 24px;
+    font-weight: 400;
+
+    @media only screen and (max-width: 1050px) {
+        font-size: 22px;
+    }
+}
+
+.ui.text.size-text3xl {
+    font-size: 30px;
+    font-weight: 400;
+
+    @media only screen and (max-width: 1050px) {
+        font-size: 28px;
+    }
+
+    @media only screen and (max-width: 550px) {
+        font-size: 26px;
+    }
+}
+
+.ui.text.size-text5xl {
+    font-size: 35px;
+    font-weight: 400;
+
+    @media only screen and (max-width: 1050px) {
+        font-size: 33px;
+    }
+
+    @media only screen and (max-width: 550px) {
+        font-size: 31px;
+    }
+}
+
+.ui.text.size-text7xl {
+    font-size: 48px;
+    font-weight: 400;
+
+    @media only screen and (max-width: 1050px) {
+        font-size: 44px;
+    }
+
+    @media only screen and (max-width: 550px) {
+        font-size: 38px;
+    }
+}
+
+ui.text {
+    color: var(--white_a700);
+    font-family: "Karla", sans-serif;
+}
+
+/* heading css */
+.ui.heading.size-text4xl {
+    font-size: 32px;
+    font-weight: 500;
+
+    @media only screen and (max-width: 1050px) {
+        font-size: 30px;
+    }
+
+    @media only screen and (max-width: 550px) {
+        font-size: 28px;
+    }
+}
+
+.ui.heading.size-text6xl {
+    font-size: 46px;
+    font-weight: 500;
+
+    @media only screen and (max-width: 1050px) {
+        font-size: 42px;
+    }
+
+    @media only screen and (max-width: 550px) {
+        font-size: 36px;
+    }
+}
+
+.ui.heading.size-headingxs {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.ui.heading.size-headings {
+    font-size: 23px;
+    font-weight: 500;
+
+    @media only screen and (max-width: 1050px) {
+        font-size: 21px;
+    }
+}
+
+.ui.heading.size-headings {
+    color: var(--black_900);
+    font-family: "Cormorant Garamond", serif;
+}

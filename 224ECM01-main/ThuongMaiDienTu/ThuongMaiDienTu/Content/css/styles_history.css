@@ -1,0 +1,108 @@
+main {
+    flex: 1;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px; /* hoặc tuỳ layout của bạn */
+    background-color: transparent; /* để không đè lên màu nền */
+}
+
+.order-summary {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin: 20px;
+    font-family: 'Roboto', sans-serif;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.shop-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.shop-name strong {
+    color: #333;
+}
+
+.chat-btn, .view-shop {
+    margin-left: 10px;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px dashed #ccc;
+    padding-top: 10px;
+}
+
+.details {
+    flex-grow: 1;
+}
+
+    .details .product-namels {
+        font-weight: bold;
+    }
+
+    .details .product-typels {
+        font-size: 14px;
+        color: #666;
+    }
+
+.price del {
+    color: #999;
+    font-size: 13px;
+}
+
+.price strong {
+    color: #d0011b;
+    font-size: 16px;
+}
+
+.order-footer {
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-info, #reviewForm-First-@order.idHoaDon {
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+    .order-info[style*="display: none"], #reviewForm-First-@order.idHoaDon[style*="display: none"] {
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+    }
+
+.btn {
+    background-color: #d0011b;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.btn-outline {
+    background: white;
+    color: #d0011b;
+    border: 1px solid #d0011b;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.rated {
+    color: #d0011b;
+    font-weight: bold;
+}

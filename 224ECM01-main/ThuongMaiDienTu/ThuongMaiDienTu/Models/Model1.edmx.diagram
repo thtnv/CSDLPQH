@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="859f0288c4b445d998bb7702d68d3b8b" Name="Diagram1">
+        <EntityTypeShape EntityType="trangsucbacModel.ChiTietHoaDon" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="trangsucbacModel.DanhGia" Width="1.5" PointX="10.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="trangsucbacModel.DanhMuc" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="trangsucbacModel.GioHang" Width="1.5" PointX="8.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="trangsucbacModel.HoaDon" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="trangsucbacModel.NguoiDung" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="trangsucbacModel.SanPham" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="trangsucbacModel.FK_CTHD_HoaDon" ManuallyRouted="false" />
+        <AssociationConnector Association="trangsucbacModel.FK_CTHD_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="trangsucbacModel.FK_DanhGia_CTHD" ManuallyRouted="false" />
+        <AssociationConnector Association="trangsucbacModel.FK_DanhGia_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="trangsucbacModel.FK__SanPham__idDanhM__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="trangsucbacModel.FK__GioHang__idNguoi__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="trangsucbacModel.FK__GioHang__idSanPh__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="trangsucbacModel.FK_HoaDon_NguoiDung" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,11 @@
+﻿
+.top-bar .right a img {
+    width: 35px !important;
+    height: 35px !important;
+    object-fit: cover !important;
+    position: relative;
+}
+
+.header-avatar .dropdown-menu{
+    min-width: 80px !important;
+}
